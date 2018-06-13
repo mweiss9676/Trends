@@ -1,0 +1,114 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/*********************** VARIABLES ************************/
+
+:root {
+  --searchBarHeight: 65px;
+  --mainColor: rgb(46, 124, 226, 1);
+  --lighterBlue:  rgba(102, 158, 231, 1);
+  --shadow: rgb(53, 64, 78);
+}
+
+/********************** END  VARIABLES ********************/
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--mainColor);
+
+
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows:5vh 1fr 1.5fr;
+  grid-template-areas: 
+    "header"
+    "app"
+    "clubhouse"
+}
+
+.topPart {
+  grid-area: app;
+  width: 100vw;
+  background-color: var(--mainColor);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.searchbar {
+  width: 50vw;
+  height: var(--searchBarHeight);
+  border-radius: 4px;
+  background-color:var(--lighterBlue);
+  margin-bottom: 50px;
+  margin-top: 20px;
+  border: none;
+}
+
+.searchbar[type="text"]{
+  font-size: 3rem;
+  font-weight: bolder;
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+  text-align: center;
+  background-color: var(--lighterBlue);
+}
+
+#searchIcon {
+  width: calc(var(--searchBarHeight) - 35px);
+  position: relative;
+  left: -60px;
+}
+
+.clubhouse {
+  grid-area: clubhouse;
+
+  height: 100%;
+  width: 100vw;
+  background-color:rgb(240, 240, 240);
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.teamComponent {
+  width: 25vh;
+  height: 25vh;
+  background-color: white;
+}
+
+.title {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 3rem;
+  color: white;
+}
+
+#firstLetter{
+  font-size: 3.5rem;
+}
+
+.setup {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100vw;
+  height: 100vh;
+}
+
+.setupInterior {
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 5px 20px -10px var(--shadow);
+}
