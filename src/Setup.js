@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { AppContext } from './Context';
 
 export class Form extends React.Component {
     constructor(props) {
@@ -44,6 +44,7 @@ export class Form extends React.Component {
     }
 
     updateAnswer(event) {
+        // console.log(event.target.name)
         this.setState({ 
             answer: event.target.value
         })
@@ -56,7 +57,16 @@ export class Form extends React.Component {
                     <div className="setup">
                         <div className="setupInterior">
                             <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
-                            <input type={ this.state.questions[this.state.page].type } name={ this.state.questions[this.state.page].name } value={ this.state.answer } onChange={ this.updateAnswer }></input>
+                            <AppContext.Consumer>
+                                {(consumer) => (
+                                    <h1>{consumer.state.numberOfTeams}</h1>
+                                )}
+                            </AppContext.Consumer>
+                            <input type={ this.state.questions[this.state.page].type }
+                                   name={ this.state.questions[this.state.page].name }
+                                   value={ this.state.answer }
+                                   onChange={ this.updateAnswer }>
+                            </input>
                         </div>
                     </div>
                 </form>

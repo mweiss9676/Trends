@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { AppContext, AppProvider } from './Context';
 import './App.css';
 import { Clubhouse, TopPart } from './Clubhouse.js';
-import { Searchbar } from './Searchbar.js';
 import { Form } from './Setup.js';
+
 
 class App extends Component {
   constructor(props) {
@@ -16,11 +17,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        <Form />
-        <TopPart />
-        <Clubhouse />
-      </div>
+      <AppProvider>
+        <div className="app">
+          <Form />
+          <TopPart />
+          <Clubhouse />
+        </div>
+      </AppProvider>
     )
   }
 }
