@@ -111,4 +111,13 @@
   transform: translate(-50%, -50%);
   background-color: white;
   box-shadow: 0 5px 20px -10px var(--shadow);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.question {
+  margin: 5%;
 }
