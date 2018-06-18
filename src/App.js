@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppContext, AppProvider } from './Context';
 import './App.css';
 import { Clubhouse, TopPart } from './Clubhouse.js';
-import { Form } from './Setup.js';
+import Form from './Setup.js';
 
 
 class App extends Component {
@@ -21,6 +21,11 @@ class App extends Component {
         <div className="app">
           <Form />
           <TopPart />
+          <AppContext.Consumer>
+            {(context) => (
+              <p className="test">{ context.state.numberOfTeams }</p>
+            )}
+          </AppContext.Consumer>
           <Clubhouse />
         </div>
       </AppProvider>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { AppContext } from './Context';
+import { connect } from 'react-redux';
 
-export class Form extends React.Component {
+class Form extends React.Component {
     constructor(props) {
         super(props);
 
@@ -25,12 +26,13 @@ export class Form extends React.Component {
                 }
             ],
             page : 0, 
-            answer: ''
+            searchFieldText: ''
         }
 
-        this.updateAnswer = this.updateAnswer.bind(this);
+        this.updateSearchField = this.updateSearchField.bind(this);
         this.updatePage = this.updatePage.bind(this);
     }
+
     updatePage(event) {
         event.preventDefault();
 
@@ -39,14 +41,13 @@ export class Form extends React.Component {
         }))
 
         this.setState({  
-            answer: ''
+            searchFieldText: ''
         })
     }
 
-    updateAnswer(event) {
-        // console.log(event.target.name)
+    updateSearchField(event) {
         this.setState({ 
-            answer: event.target.value
+            searchFieldText: event.target.value
         })
     }
 
@@ -57,15 +58,16 @@ export class Form extends React.Component {
                     <div className="setup">
                         <div className="setupInterior">
                             <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
-                            <AppContext.Consumer>
+                            {/* <AppContext.Consumer>
                                 {(consumer) => (
                                     <h1>{consumer.state.numberOfTeams}</h1>
                                 )}
-                            </AppContext.Consumer>
-                            <input type={ this.state.questions[this.state.page].type }
+                            </AppContext.Consumer> */}
+                            <input className="setupInput"
+                                   type={ this.state.questions[this.state.page].type }
                                    name={ this.state.questions[this.state.page].name }
-                                   value={ this.state.answer }
-                                   onChange={ this.updateAnswer }>
+                                   value={ this.state.searchFieldText }
+                                   onChange={ this.updateSearchField }>
                             </input>
                         </div>
                     </div>
@@ -76,3 +78,5 @@ export class Form extends React.Component {
         }
     }
 }
+
+export default connect()(Form);

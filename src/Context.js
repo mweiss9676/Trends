@@ -13,7 +13,7 @@ export class AppProvider extends Component {
     return (
       <AppContext.Provider value={{
           state: this.state, 
-          setNumTeams : (value) => this.setState({ numberOfTeams: value})
+          setNumTeams : function() { this.setState({ numberOfTeams: 55})}
       }}>
         { this.props.children }
       </AppContext.Provider>

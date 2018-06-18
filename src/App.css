@@ -118,6 +118,20 @@
   align-items: center;
 }
 
+.setupInput {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  text-align: center;
+}
+
 .question {
   margin: 5%;
+}
+
+.test {
+  position: absolute;
+  left: 50%;
+  z-index: 500;
+  font-size: 40px;
 }
