@@ -1,8 +1,11 @@
-const CURRENT_TERM = '';
-const LENGTH_ROUNDS = 60000;
-const NUMBER_ROUNDS = 5;
-const TRENDS_INFO = '';
-const TEAM_TOTALS = [];
+const CURRENT_TERM = 'CURRENT_TERM';
+const LENGTH_ROUNDS = 'LENGTH_ROUNDS';
+const NUMBER_ROUNDS = 'NUMBER_ROUNDS';
+const TRENDS_INFO = 'TRENDS_INFO';
+const TEAM_TOTALS = 'TEAM_TOTALS';
+const NUMBER_TEAMS = 'NUMBER_TEAMS';
+
+
 
 export function gameReducer(state = '', { type, payload }) {
     switch (type) {
@@ -10,10 +13,10 @@ export function gameReducer(state = '', { type, payload }) {
             return payload.term;
         
         case LENGTH_ROUNDS: 
-            return payload.timer;
+            return payload.lengthRounds;
             
         case NUMBER_ROUNDS: 
-            return payload;
+            return payload.numberRounds;
 
         case TRENDS_INFO: 
             return payload.trendsInfo;
@@ -21,15 +24,48 @@ export function gameReducer(state = '', { type, payload }) {
         case TEAM_TOTALS: 
             return payload.teamTotals;
 
+        case NUMBER_TEAMS: 
+            return payload.numberTeams;
+
         default: 
-            return state
+            return state;
     }
 }
 
 export function setNumberRounds(numberRounds){
-    return {
-        type: NUMBER_ROUNDS,
-        payload: numberRounds
+    if(numberRounds !== undefined){
+        return {
+            type: NUMBER_ROUNDS,
+            payload: {
+                numberRounds: numberRounds
+            }
+        }
+    } else {
+        return null;
+    }
+}
+
+export function setLengthRounds(lengthRounds) {
+    if(lengthRounds !== undefined) {
+        return {
+            type: LENGTH_ROUNDS,
+            payload: {
+                lengthRounds: lengthRounds
+            }
+        }
+    } else {
+        return null;
+    }
+}
+
+export function setNumberTeams(numberTeams){
+    if (numberTeams !== undefined) {
+        return {
+            type: NUMBER_TEAMS,
+            payload: {
+                numberTeams: numberTeams
+            }
+        }
     }
 }
 

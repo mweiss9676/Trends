@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppContext } from './Context';
 import { connect } from 'react-redux';
+import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions-Reducers/game-reducer';
 
 class Form extends React.Component {
     constructor(props) {
@@ -25,58 +26,103 @@ class Form extends React.Component {
                     name: 'teamName'
                 }
             ],
-            page : 0, 
-            searchFieldText: ''
+            page : 0,
+            searchFieldText: '',
+            numberOfTeams: 0,
+            numberOfRounds: 0,
+            lengthOfRounds: 0,
+            teamName: ''
         }
 
-        this.updateSearchField = this.updateSearchField.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.updatePage = this.updatePage.bind(this);
+        this.onSetNumberRounds = this.onSetNumberRounds.bind(this);
+        this.onSetLengthRounds = this.onSetLengthRounds.bind(this);
+        this.onSetNumberTeams = this.onSetNumberTeams.bind(this);
+        this.onSubmitHandler = this.onSubmitHandler.bind(this);
+    }
+
+    onSubmitHandler(event) {
+        event.preventDefault();
+        this.updatePage(event);
+        // this.onSetNumberRounds(event);
+    }
+
+    onSetNumberTeams(teamCount){
+        this.props.onSetNumberTeams(teamCount);
+    }
+
+    onSetNumberRounds(rounds){
+        this.props.onSetNumberRounds(rounds);
+    }
+
+    onSetLengthRounds(length){
+        this.props.onSetLengthRounds(length);
     }
 
     updatePage(event) {
-        event.preventDefault();
-
         this.setState(prevState => ({
             page: prevState.page + 1
         }))
 
-        this.setState({  
+        this.setState({
             searchFieldText: ''
         })
     }
 
-    updateSearchField(event) {
-        this.setState({ 
+    handleChange(event) {
+
+        this.setState({
             searchFieldText: event.target.value
         })
+
+        switch (event.target.name) {
+            case 'numberOfRounds':
+                return this.onSetNumberRounds(event.target.value);
+            case 'numberOfTeams':
+                return this.onSetNumberTeams(event.target.value);
+            case 'lengthOfRounds': 
+                return this.onSetLengthRounds(event.target.value);
+            case 'teamName': 
+                return this.onSetTeamName;
+        default:
+            return this.onSetNumberRounds(999);
+
+       }
     }
 
     render() {
         if(this.state.page < this.state.questions.length){
             return (
-                <form onSubmit={ this.updatePage }>
+                <form onSubmit={ this.onSubmitHandler }>
                     <div className="setup">
                         <div className="setupInterior">
                             <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
-                            {/* <AppContext.Consumer>
-                                {(consumer) => (
-                                    <h1>{consumer.state.numberOfTeams}</h1>
-                                )}
-                            </AppContext.Consumer> */}
                             <input className="setupInput"
                                    type={ this.state.questions[this.state.page].type }
                                    name={ this.state.questions[this.state.page].name }
                                    value={ this.state.searchFieldText }
-                                   onChange={ this.updateSearchField }>
+                                   onChange={ this.handleChange }>
                             </input>
                         </div>
                     </div>
                 </form>
             )
         } else {
-            return null
+            return this.onSetNumberRounds
         }
     }
 }
 
-export default connect()(Form);
+const mapStateToProps = state => ({
+    timer: state.timer,
+    numberRounds: state.numberRounds,
+})
+
+const mapActionsToProps = {
+    onSetNumberRounds : setNumberRounds,
+    onSetLengthRounds: setLengthRounds,
+    onSetNumberTeams: setNumberTeams
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(Form);

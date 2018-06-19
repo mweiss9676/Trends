@@ -14,12 +14,18 @@ const allReducers = combineReducers({
 })
 
 const initialState = {
-    CURRENT_TERM: ''
+    term: '',
+    timer: 60000,
+    numberRounds: 5,
+    trendsInfo: [],
+    teamTotals: []
 }
 
 const store = createStore(
     allReducers,
-    initialState
+    initialState,
+    window.devToolsExtension && window.devToolsExtension()
+
 );
 
 ReactDOM.render(
