@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppContext } from './Context';
 import { connect } from 'react-redux';
-import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions-Reducers/game-reducer';
+import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions/game-actions';
 
 class Form extends React.Component {
     constructor(props) {
@@ -27,7 +27,9 @@ class Form extends React.Component {
                 }
             ],
             page : 0,
-            searchFieldText: ''
+            searchFieldText: '',
+            warningText: '',
+            warningVisible: false
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -55,8 +57,28 @@ class Form extends React.Component {
 
         switch (event.target.name) {
             case 'numberOfRounds':
-                return this.props.onSetNumberRounds(event.target.value);
+                if (event.target.value < 1 || event.target.value > 30) {
+                    this.setState({
+                        warningVisible: true,
+                        warningText: 'The recommended number of rounds is at least 2 and at most 30'
+                    })
+                } else {
+                    this.setState({
+                        warningVisible: false
+                    })
+                    return this.props.onSetNumberRounds(event.target.value);
+                }
             case 'numberOfTeams':
+                if (event.target.value < 2 || event.target.value > 10) {
+                    this.setState({
+                        warningVisible: true,
+                        warningText: 'The recommended number of teams is between 2 and 10'
+                    })
+                } else {
+                    this.setState({
+                        warningVisible: false
+                    })
+                }
                 return this.props.onSetNumberTeams(event.target.value);
             case 'lengthOfRounds': 
                 return this.props.onSetLengthRounds(event.target.value);
@@ -73,7 +95,14 @@ class Form extends React.Component {
             return (
                 <form onSubmit={ this.updatePage }>
                     <div className="setup">
+
                         <div className="setupInterior">
+                        {this.state.warningVisible && 
+                            <div className="warningBox">
+                                <h3 className="warningText">{ this.state.warningText }</h3>
+                            </div>
+                        }
+
                             <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
                             <input className="setupInput"
                                    type={ this.state.questions[this.state.page].type }

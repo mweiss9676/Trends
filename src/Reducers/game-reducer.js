@@ -1,10 +1,4 @@
-const CURRENT_TERM = 'CURRENT_TERM';
-const LENGTH_ROUNDS = 'LENGTH_ROUNDS';
-const NUMBER_ROUNDS = 'NUMBER_ROUNDS';
-const TRENDS_INFO = 'TRENDS_INFO';
-const TEAM_TOTALS = 'TEAM_TOTALS';
-const NUMBER_TEAMS = 'NUMBER_TEAMS';
-
+import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -64,45 +58,6 @@ export function numberOfTeamsReducer(state = 0, { type, payload }) {
 
 
 
-
-
-
-export function setNumberRounds(numberRounds){
-    if(numberRounds !== undefined){
-        return {
-            type: NUMBER_ROUNDS,
-            payload: {
-                numberRounds: numberRounds
-            }
-        }
-    } else {
-        return null;
-    }
-}
-
-export function setLengthRounds(lengthRounds) {
-    if(lengthRounds !== undefined) {
-        return {
-            type: LENGTH_ROUNDS,
-            payload: {
-                lengthRounds: lengthRounds
-            }
-        }
-    } else {
-        return null;
-    }
-}
-
-export function setNumberTeams(numberTeams){
-    if (numberTeams !== undefined) {
-        return {
-            type: NUMBER_TEAMS,
-            payload: {
-                numberTeams: numberTeams
-            }
-        }
-    }
-}
 
 // export default function userReducer(state = '', { type, payload }) {
 //     switch (type) {
