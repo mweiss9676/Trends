@@ -6,27 +6,24 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import { gameReducer } from './Actions-Reducers/game-reducer';
+import { lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer } from './Actions-Reducers/game-reducer';
 
 
 const allReducers = combineReducers({
-    game: gameReducer
+    timePerRound: lengthOfGameReducer,
+    numberRounds: numberOfRoundsReducer,
+    currentTerm: currentTermReducer,
+    trendsInfo: trendsInfoReducer,
+    teamTotals: teamTotalsReducer,
+    numberTeams: numberOfTeamsReducer
 })
-
-const initialState = {
-    term: '',
-    timer: 60000,
-    numberRounds: 5,
-    trendsInfo: [],
-    teamTotals: []
-}
 
 const store = createStore(
     allReducers,
-    initialState,
     window.devToolsExtension && window.devToolsExtension()
 
 );
+
 
 ReactDOM.render(
     <Provider store={ store }>

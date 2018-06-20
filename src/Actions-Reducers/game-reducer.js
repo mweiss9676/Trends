@@ -6,31 +6,66 @@ const TEAM_TOTALS = 'TEAM_TOTALS';
 const NUMBER_TEAMS = 'NUMBER_TEAMS';
 
 
-
-export function gameReducer(state = '', { type, payload }) {
-    switch (type) {
-        case CURRENT_TERM:
-            return payload.term;
-        
+export function lengthOfGameReducer(state = 60000, { type, payload }) {
+    switch(type) {
         case LENGTH_ROUNDS: 
             return payload.lengthRounds;
-            
-        case NUMBER_ROUNDS: 
-            return payload.numberRounds;
-
-        case TRENDS_INFO: 
-            return payload.trendsInfo;
-
-        case TEAM_TOTALS: 
-            return payload.teamTotals;
-
-        case NUMBER_TEAMS: 
-            return payload.numberTeams;
-
         default: 
-            return state;
+            return state
     }
 }
+
+export function currentTermReducer(state = '', { type, payload }) {
+    switch(type) {
+        case CURRENT_TERM: 
+            return payload.currentTerm;
+        default: 
+            return state
+    }
+}
+
+export function numberOfRoundsReducer(state = 5, { type, payload }) {
+    switch(type) {
+        case NUMBER_ROUNDS: 
+            return payload.numberRounds;
+        default: 
+            return state
+    }
+}
+
+export function trendsInfoReducer(state = [], { type, payload }) {
+    switch(type) {
+        case TRENDS_INFO: 
+            return payload.trendsInfo;
+        default: 
+            return state
+    }
+}
+
+export function teamTotalsReducer(state = [], { type, payload }) {
+    switch(type) {
+        case TEAM_TOTALS: 
+            return payload.teamTotals;
+        default: 
+            return state
+    }
+}
+
+export function numberOfTeamsReducer(state = 0, { type, payload }) {
+    switch(type) {
+        case NUMBER_TEAMS: 
+            return payload.numberTeams;
+        default: 
+            return state
+    }
+}
+
+
+
+
+
+
+
 
 export function setNumberRounds(numberRounds){
     if(numberRounds !== undefined){

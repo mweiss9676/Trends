@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppContext, AppProvider } from './Context';
+// import { AppContext, AppProvider } from './Context';
 import './App.css';
 import { Clubhouse, TopPart } from './Clubhouse.js';
 import Form from './Setup.js';
@@ -17,18 +17,18 @@ class App extends Component {
 
   render() {
     return (
-      <AppProvider>
+      // <AppProvider>
         <div className="app">
           <Form />
           <TopPart />
-          <AppContext.Consumer>
+          {/* <AppContext.Consumer>
             {(context) => (
               <p className="test">{ context.state.numberOfTeams }</p>
             )}
-          </AppContext.Consumer>
+          </AppContext.Consumer> */}
           <Clubhouse />
         </div>
-      </AppProvider>
+      // </AppProvider>
     )
   }
 }

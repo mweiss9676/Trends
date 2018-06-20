@@ -27,40 +27,17 @@ class Form extends React.Component {
                 }
             ],
             page : 0,
-            searchFieldText: '',
-            numberOfTeams: 0,
-            numberOfRounds: 0,
-            lengthOfRounds: 0,
-            teamName: ''
+            searchFieldText: ''
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.updatePage = this.updatePage.bind(this);
-        this.onSetNumberRounds = this.onSetNumberRounds.bind(this);
-        this.onSetLengthRounds = this.onSetLengthRounds.bind(this);
-        this.onSetNumberTeams = this.onSetNumberTeams.bind(this);
-        this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    }
-
-    onSubmitHandler(event) {
-        event.preventDefault();
-        this.updatePage(event);
-        // this.onSetNumberRounds(event);
-    }
-
-    onSetNumberTeams(teamCount){
-        this.props.onSetNumberTeams(teamCount);
-    }
-
-    onSetNumberRounds(rounds){
-        this.props.onSetNumberRounds(rounds);
-    }
-
-    onSetLengthRounds(length){
-        this.props.onSetLengthRounds(length);
     }
 
     updatePage(event) {
+
+        event.preventDefault();
+
         this.setState(prevState => ({
             page: prevState.page + 1
         }))
@@ -78,15 +55,15 @@ class Form extends React.Component {
 
         switch (event.target.name) {
             case 'numberOfRounds':
-                return this.onSetNumberRounds(event.target.value);
+                return this.props.onSetNumberRounds(event.target.value);
             case 'numberOfTeams':
-                return this.onSetNumberTeams(event.target.value);
+                return this.props.onSetNumberTeams(event.target.value);
             case 'lengthOfRounds': 
-                return this.onSetLengthRounds(event.target.value);
-            case 'teamName': 
-                return this.onSetTeamName;
-        default:
-            return this.onSetNumberRounds(999);
+                return this.props.onSetLengthRounds(event.target.value);
+            // case 'teamName': 
+            //     return this.props.onSetTeamName;
+            default:
+                return;
 
        }
     }
@@ -94,7 +71,7 @@ class Form extends React.Component {
     render() {
         if(this.state.page < this.state.questions.length){
             return (
-                <form onSubmit={ this.onSubmitHandler }>
+                <form onSubmit={ this.updatePage }>
                     <div className="setup">
                         <div className="setupInterior">
                             <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
@@ -109,7 +86,7 @@ class Form extends React.Component {
                 </form>
             )
         } else {
-            return this.onSetNumberRounds
+            return null
         }
     }
 }
