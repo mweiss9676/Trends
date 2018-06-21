@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import search from './images/search.png';
 
 export class Searchbar extends React.Component{
@@ -7,7 +6,7 @@ export class Searchbar extends React.Component{
         return(
             <div>
             <input type="text" className="searchbar"></input>
-            <img id="searchIcon" src={ search }/>
+            <img id="searchIcon" src={ search } alt="search icon"/>
             </div>
         )
     }

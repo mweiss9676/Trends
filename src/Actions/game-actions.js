@@ -23,7 +23,7 @@ export function setLengthRounds(lengthRounds) {
     if(lengthRounds !== undefined) {
         return {
             type: LENGTH_ROUNDS,
-            payload: {
+            payload: {  
                 lengthRounds: lengthRounds
             }
         }
@@ -42,3 +42,6 @@ export function setNumberTeams(numberTeams){
         }
     }
 }
+
+
+

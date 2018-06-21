@@ -1,5 +1,4 @@
 import React from 'react';
-import { AppContext } from './Context';
 import { connect } from 'react-redux';
 import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions/game-actions';
 
@@ -18,7 +17,7 @@ class Form extends React.Component {
                     name: 'numberOfRounds'
                 },
                 {   message: 'And how long for each round?',
-                    type: 'number',
+                    type: 'text',
                     name: 'lengthOfRounds'
                 },
                 {   message: 'Alright, what\'s your team name?',
@@ -28,7 +27,7 @@ class Form extends React.Component {
             ],
             page : 0,
             searchFieldText: '',
-            warningText: '',
+            warningText: null,
             warningVisible: false
         }
 
@@ -56,23 +55,11 @@ class Form extends React.Component {
         })
 
         switch (event.target.name) {
-            case 'numberOfRounds':
-                if (event.target.value < 1 || event.target.value > 30) {
-                    this.setState({
-                        warningVisible: true,
-                        warningText: 'The recommended number of rounds is at least 2 and at most 30'
-                    })
-                } else {
-                    this.setState({
-                        warningVisible: false
-                    })
-                    return this.props.onSetNumberRounds(event.target.value);
-                }
             case 'numberOfTeams':
                 if (event.target.value < 2 || event.target.value > 10) {
                     this.setState({
-                        warningVisible: true,
-                        warningText: 'The recommended number of teams is between 2 and 10'
+                        warningText: 'The recommended number of teams is between 2 and 10',
+                        warningVisible: true
                     })
                 } else {
                     this.setState({
@@ -80,6 +67,20 @@ class Form extends React.Component {
                     })
                 }
                 return this.props.onSetNumberTeams(event.target.value);
+
+            case 'numberOfRounds':
+                if (event.target.value < 1 || event.target.value > 30) {
+                    this.setState({
+                        warningText: 'The recommended number of rounds is at least 2 and at most 30',
+                        warningVisible: true
+                    })
+                } else {
+                    this.setState({
+                        warningVisible: false
+                    });
+                }
+                return this.props.onSetNumberRounds(event.target.value);
+
             case 'lengthOfRounds': 
                 return this.props.onSetLengthRounds(event.target.value);
             // case 'teamName': 
