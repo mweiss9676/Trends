@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions/game-actions';
+import Confirm from './Confirm';
 
 class Form extends React.Component {
     constructor(props) {
@@ -10,25 +11,29 @@ class Form extends React.Component {
             questions : [
                 {   message: 'How many teams will be playing?',
                     type: 'number',
-                    name: 'numberOfTeams'
+                    name: 'numberOfTeams',
+                    placeholder: '...4'
                 },
                 {   message: 'How many rounds ya wanna do?',
                     type: 'number',
-                    name: 'numberOfRounds'
+                    name: 'numberOfRounds',
+                    placeholder: '...5'
                 },
                 {   message: 'And how long for each round?',
                     type: 'text',
-                    name: 'lengthOfRounds'
+                    name: 'lengthOfRounds',
+                    placeholder: '...1 minute 30 seconds'
                 },
                 {   message: 'Alright, what\'s your team name?',
                     type: 'text',
-                    name: 'teamName'
+                    name: 'teamName',
+                    placeholder: '...Blue Baracudas'
                 }
             ],
             page : 0,
             searchFieldText: '',
             warningText: null,
-            warningVisible: false
+            warningVisible: false,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -91,6 +96,19 @@ class Form extends React.Component {
        }
     }
 
+    // confirmSettings() {
+    //     return (
+    //         <div className="setupInterior">
+    //             <h1>Number of rounds: { this.props.numberRounds }</h1>
+    //             <h1>Length of rounds: { this.props.timePerRound }</h1>
+    //             <h1>Number of teams: { this.props.numberTeams }</h1>
+    //             <h1>Team name: { this.props.teamName }</h1>
+    //             <button onClick={ null }>Looks good!</button>
+    //         </div>
+    //     )
+    // }
+
+
     render() {
         if(this.state.page < this.state.questions.length){
             return (
@@ -108,6 +126,7 @@ class Form extends React.Component {
                             <input className="setupInput"
                                    type={ this.state.questions[this.state.page].type }
                                    name={ this.state.questions[this.state.page].name }
+                                   placeholder={ this.state.questions[this.state.page].placeholder }
                                    value={ this.state.searchFieldText }
                                    onChange={ this.handleChange }>
                             </input>
@@ -116,7 +135,9 @@ class Form extends React.Component {
                 </form>
             )
         } else {
-            return null
+            return (
+                <Confirm />
+            )
         }
     }
 }
@@ -124,6 +145,8 @@ class Form extends React.Component {
 const mapStateToProps = state => ({
     timer: state.timer,
     numberRounds: state.numberRounds,
+    timePerRound: state.timePerRound,
+    numberTeams: state.numberTeams
 })
 
 const mapActionsToProps = {

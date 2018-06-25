@@ -54,20 +54,7 @@ export function numberOfTeamsReducer(state = 0, { type, payload }) {
     }
 }
 
-// const parseTime = time => {
-//     //return time in thousands of a second i.e. 60,000 = 1 minute
-//     const split = time.split(' ');
-//     const lower = split.map(word => word.toLowerCase());
-//     const result = lower.reduce((acc, current, index, array) => {
-//         if (current === 'second' || current === 'seconds' || current === 'sec') {
-//             return acc + ((array[index - 1]) * 1000)
-//         } else if (current === 'minute' || current === 'min' || current === 'minutes') {
-//             return acc + ((array[index - 1]) * 10000)
-//         } else {
-//             return acc + 0
-//         }
-//     }, 0);
-// }
+
 
 
 

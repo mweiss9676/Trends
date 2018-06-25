@@ -17,18 +17,11 @@ class App extends Component {
 
   render() {
     return (
-      // <AppProvider>
         <div className="app">
           <Form />
           <TopPart />
-          {/* <AppContext.Consumer>
-            {(context) => (
-              <p className="test">{ context.state.numberOfTeams }</p>
-            )}
-          </AppContext.Consumer> */}
           <Clubhouse />
         </div>
-      // </AppProvider>
     )
   }
 }
