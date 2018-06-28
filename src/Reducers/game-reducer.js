@@ -1,4 +1,4 @@
-import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS } from '../Actions/game-actions';
+import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, TOPIC_TERM } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -9,7 +9,7 @@ export function lengthOfGameReducer(state = 60000, { type, payload }) {
     }
 }
 
-export function currentTermReducer(state = '', { type, payload }) {
+export function termsReducer(state = [], { type, payload }) {
     switch(type) {
         case CURRENT_TERM: 
             return payload.currentTerm;
@@ -49,6 +49,15 @@ export function numberOfTeamsReducer(state = 0, { type, payload }) {
     switch(type) {
         case NUMBER_TEAMS: 
             return payload.numberTeams;
+        default: 
+            return state
+    }
+}
+
+export function topicTerm(state = 'Hitler', { type, payload }) {
+    switch(type) {
+        case TOPIC_TERM: 
+            return payload.topicTerm;
         default: 
             return state
     }

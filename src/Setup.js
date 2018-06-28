@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions/game-actions';
+import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm } from './Actions/game-actions';
 import Confirm from './Confirm';
 
 class Form extends React.Component {
@@ -28,6 +28,12 @@ class Form extends React.Component {
                     type: 'text',
                     name: 'teamName',
                     placeholder: '...Blue Baracudas'
+                },
+                {
+                    message: 'Okie Doke, what is the our topic-term for this game?',
+                    type: 'text',
+                    name: 'topic',
+                    placeholder: '...Pokemon'
                 }
             ],
             page : 0,
@@ -88,8 +94,10 @@ class Form extends React.Component {
 
             case 'lengthOfRounds': 
                 return this.props.onSetLengthRounds(event.target.value);
-            // case 'teamName': 
-            //     return this.props.onSetTeamName;
+
+            case 'topic': 
+                return this.props.onSetTopicTerm(event.target.value);
+
             default:
                 return;
 
@@ -133,13 +141,15 @@ const mapStateToProps = state => ({
     timer: state.timer,
     numberRounds: state.numberRounds,
     timePerRound: state.timePerRound,
-    numberTeams: state.numberTeams
+    numberTeams: state.numberTeams,
+    topicTerm: state.topicTerm
 })
 
 const mapActionsToProps = {
     onSetNumberRounds : setNumberRounds,
     onSetLengthRounds: setLengthRounds,
-    onSetNumberTeams: setNumberTeams
+    onSetNumberTeams: setNumberTeams,
+    onSetTopicTerm: setTopicTerm
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Form);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNumberRounds, setLengthRounds, setNumberTeams } from './Actions/game-actions';
+import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm } from './Actions/game-actions';
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -33,6 +33,7 @@ class Confirm extends React.Component {
         if (this.state.confirmed === false) {
             return (
                 <div className="setupInterior">
+                    <h1 contentEditable="true">Topic Term: { this.props.topicTerm }</h1>
                     <h1 contentEditable="true">Number of rounds: { this.props.numberRounds }</h1>
                     <h1 contentEditable="true">Length of rounds: { this.props.timePerRound }</h1>
                     <h1 contentEditable="true">Number of teams: { this.props.numberTeams }</h1>
@@ -42,7 +43,7 @@ class Confirm extends React.Component {
                         const parsed = this.parseTime(this.props.timePerRound);
                         this.props.onSetLengthRounds(parsed);
                         
-                        fetch('/api/apple')
+                        fetch(`/api/${ this.props.topicTerm }`)
                         .then(res => res.json())
                         .then(json => console.log(json))
                         .catch(err => console.log(`error is ${err}`))
@@ -63,13 +64,15 @@ const mapStateToProps = state => ({
     timer: state.timer,
     numberRounds: state.numberRounds,
     timePerRound: state.timePerRound,
-    numberTeams: state.numberTeams
+    numberTeams: state.numberTeams,
+    topicTerm: state.topicTerm
 })
 
 const mapActionsToProps = {
     onSetNumberRounds : setNumberRounds,
     onSetLengthRounds: setLengthRounds,
-    onSetNumberTeams: setNumberTeams
+    onSetNumberTeams: setNumberTeams,
+    onSetTopicTerm: setTopicTerm
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Confirm);
