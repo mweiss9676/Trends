@@ -33,17 +33,23 @@ class Confirm extends React.Component {
         if (this.state.confirmed === false) {
             return (
                 <div className="setupInterior">
-                    <h1>Number of rounds: { this.props.numberRounds }</h1>
-                    <h1>Length of rounds: { this.props.timePerRound }</h1>
-                    <h1>Number of teams: { this.props.numberTeams }</h1>
-                    <h1>Team name: { this.props.teamName }</h1>
+                    <h1 contentEditable="true">Number of rounds: { this.props.numberRounds }</h1>
+                    <h1 contentEditable="true">Length of rounds: { this.props.timePerRound }</h1>
+                    <h1 contentEditable="true">Number of teams: { this.props.numberTeams }</h1>
+                    <h1 contentEditable="true">Team name: { this.props.teamName }</h1>
                     <button onClick={ () => {
                         //parse the time here
                         const parsed = this.parseTime(this.props.timePerRound);
                         this.props.onSetLengthRounds(parsed);
+                        
+                        fetch('/api/apple')
+                        .then(res => res.json())
+                        .then(json => console.log(json))
+                        .catch(err => console.log(`error is ${err}`))
+
                         this.setState({
                             confirmed: true
-                        })
+                        });
                     } }>Looks good!</button>
                 </div>
             )

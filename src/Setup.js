@@ -96,19 +96,6 @@ class Form extends React.Component {
        }
     }
 
-    // confirmSettings() {
-    //     return (
-    //         <div className="setupInterior">
-    //             <h1>Number of rounds: { this.props.numberRounds }</h1>
-    //             <h1>Length of rounds: { this.props.timePerRound }</h1>
-    //             <h1>Number of teams: { this.props.numberTeams }</h1>
-    //             <h1>Team name: { this.props.teamName }</h1>
-    //             <button onClick={ null }>Looks good!</button>
-    //         </div>
-    //     )
-    // }
-
-
     render() {
         if(this.state.page < this.state.questions.length){
             return (
