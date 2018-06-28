@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { AppContext, AppProvider } from './Context';
 import './App.css';
-import { Clubhouse, TopPart } from './Clubhouse.js';
+import Clubhouse, { TopPart } from './Clubhouse.js';
 import Form from './Setup.js';
 
 

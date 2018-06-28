@@ -1,17 +1,18 @@
 import React from 'react';
 import { Searchbar } from './Searchbar.js'
 import { TeamComponent } from './Team.js';
+import { connect } from 'react-redux';
 import './App.css';
 
 
-export class Clubhouse extends React.Component {
+class Clubhouse extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
     render(){
-        return (
-            <div className="clubhouse">
-                <TeamComponent />
-                <TeamComponent />
-                <TeamComponent />
-            </div>
+        return(
+            <div></div>
         )
     }
 }
@@ -33,5 +34,11 @@ export class TopPart extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    numberTeams: state.numberTeams,
+})
+
+export default connect(mapStateToProps)(Clubhouse);
 
 

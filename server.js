@@ -50,12 +50,12 @@ const fetch = require('node-fetch');
 
 
 const serverPort = 5000;
-http = require("http");
-express = require("express");
-app = express();
-server = http.createServer(app);
-WebSocket = require("ws");
-websocketServer = new WebSocket.Server({ server });
+const http = require("http");
+const express = require("express");
+const app = express();
+const server = http.createServer(app);
+const WebSocket = require("ws");
+const websocketServer = new WebSocket.Server({ server });
 
 websocketServer.on('connection', (webSocketClient) => {
     webSocketClient.send('{ "connection" : "ok"}');
