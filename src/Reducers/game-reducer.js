@@ -1,4 +1,4 @@
-import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, TOPIC_TERM } from '../Actions/game-actions';
+import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, TOPIC_TERM, TEAM_NAME } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -54,7 +54,7 @@ export function numberOfTeamsReducer(state = 0, { type, payload }) {
     }
 }
 
-export function topicTerm(state = 'Hitler', { type, payload }) {
+export function topicTermReducer(state = '', { type, payload }) {
     switch(type) {
         case TOPIC_TERM: 
             return payload.topicTerm;
@@ -63,31 +63,11 @@ export function topicTerm(state = 'Hitler', { type, payload }) {
     }
 }
 
-
-
-
-
-
-// export default function userReducer(state = '', { type, payload }) {
-//     switch (type) {
-//       case UPDATE_USER: 
-//         return payload.user;
-//        default : 
-//         return state
-//     }
-//   }
-
-//   export function updateUser(newUser){
-//     return {
-//         type: UPDATE_USER,
-//         payload: {
-//             user: newUser
-//         }
-//     }
-// }
-
-// current word: string,
-// timer: datetime,
-// graph information: json,
-// each teams total score: object of string: int,
-// number of rounds: int
+export function teamNameReducer(state = '', { type, payload }) {
+    switch(type) {
+        case TEAM_NAME: 
+            return payload.teamName;
+        default: 
+            return state
+    }
+}

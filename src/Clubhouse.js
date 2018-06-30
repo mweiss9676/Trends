@@ -12,7 +12,11 @@ class Clubhouse extends React.Component {
 
     render(){
         return(
-            <div></div>
+            <div className="clubhouse">
+                <TeamComponent />,
+                <TeamComponent />,
+                <TeamComponent />
+            </div>
         )
     }
 }

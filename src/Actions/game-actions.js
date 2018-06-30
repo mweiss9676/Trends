@@ -5,6 +5,7 @@ export const TRENDS_INFO = 'TRENDS_INFO';
 export const TEAM_TOTALS = 'TEAM_TOTALS';
 export const NUMBER_TEAMS = 'NUMBER_TEAMS';
 export const TOPIC_TERM = 'TOPIC_TERM';
+export const TEAM_NAME = 'TEAM_NAME';
 
 
 export function setNumberRounds(numberRounds){
@@ -50,6 +51,17 @@ export function setTopicTerm(topicTerm) {
             type: TOPIC_TERM,
             payload: {
                 topicTerm: topicTerm
+            }
+        }
+    }
+}
+
+export function setTeamName(teamName){
+    if(teamName !== undefined) {
+        return {
+            type: TEAM_NAME,
+            payload: {
+                teamName: teamName
             }
         }
     }

@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-import { lengthOfGameReducer, numberOfRoundsReducer, termsReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTerm } from './Reducers/game-reducer';
+import { lengthOfGameReducer, numberOfRoundsReducer, termsReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
 
 
 const allReducers = combineReducers({
@@ -16,13 +16,13 @@ const allReducers = combineReducers({
     trendsInfo: trendsInfoReducer,
     teamTotals: teamTotalsReducer,
     numberTeams: numberOfTeamsReducer, 
-    topicTerm: topicTerm
+    topicTerm: topicTermReducer,
+    teamName: teamNameReducer
 })
 
 const store = createStore(
     allReducers,
     window.devToolsExtension && window.devToolsExtension()
-
 );
 
 

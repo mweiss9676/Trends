@@ -1,65 +1,167 @@
 const fetch = require('node-fetch');
-
-const serverPort = 5000;
-const http = require("http");
 const express = require("express");
-const app = express();
-const server = http.createServer(app);
-const WebSocket = require("ws");
-const wss = new WebSocket.Server({ server });
+const server = require('http').createServer();
+const io = require('socket.io')(server);
+/*
+one person will set up the game
+there will be a socket connection made on the first person to connect
+this person will input the length of rounds, the number of rounds, number of teams, and the keyword
+there will be a boolean to prevent any other socket's input until the game is 'setup'
+after the game is setup the server will ask for teamnames
+once all teamnames are in the server will start the first round by starting the timer 
+if the timer isn't running the client shouldn't accept input in the search box
+after all answers are received/the timer ends the server should send a stop timer/round function and process the answers
+*/
 
 //what info does the server need to run the game?
-//all team names 
+//all team names and their associated scores per round and overall, as well as their guesses 
 //the game's keyword
 //the length of the rounds
 //the number of rounds
-//
 
-wss.on('connection', (webSocketClient) => {
-    webSocketClient.send('{ "connection" : "ok"}');
-    webSocketClient.on('message', (message) => { wss.clients.forEach( client => { client.send(`{ "message" : ${message} }`) });
-    });
-});
+let gameCaptain = null;
+let teamInfo = null;
+let keyword = null;
+let gamePassCode = null;
+let roundLength = null;
+let numberRounds = null;
+let isGameSetup = false;
 
-const broadcast = (data, ws) => {
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN && client !== ws) {
-      client.send(JSON.stringify(data))
-    }
-  })
+function reset() {
+  gameCaptain = null;
+  teamInfo = null;
+  keyword = null;
+  gamePassCode = null;
+  roundLength = null;
+  numberRounds = null;
+  isGameSetup = false;
 }
 
-wss.on('connection', ws => {
-  let index
-})
+io.on('connection', function(socket) {
 
-app.get('/api/:term', (req, res) => {
-  let term = req.params.term;
-
-  if(term.includes(' ')) {
-
-    term = term.replace(' ', '+');
-    fetch(`https://api.datamuse.com/words?ml=${term}&max=5`)
-    .then(terms => terms.json())
-    .then(json => res.send(json))
-    .catch(err => console.log(err));
-    
-  } else {
-
-    fetch(`https://api.datamuse.com/words?rel_trg=${term}&max=5`)
-    .then(terms => terms.json())
-    .then(json => res.send(json))
-    .catch(err => console.log(err));
+  if(gameCaptain === null) {
+    gameCaptain = socket;
+    socket.emit('isCaptain', true);
   }
-})
 
-server.listen(serverPort, () => {console.log(`Websocket server started on port ` + serverPort) });
+  
+});
 
 
-//we could have a single user setup the game, entering in the length of rounds, number of rounds, and the keyword and then send the game state to this server. 
-//This server could then request each user input their team name
-//This server could then disseminate the game state to all connected users
-//That gamestate could be used to create identical games across all users
-//this server could then issue a command to begin round one and start a timer
-//when the timer ends the server could refuse any more answers (somehow)
+reset()
+const port = 5000
+io.listen(port)
+console.log('Listening on port ' + port + '...')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const serverPort = 5000;
+// const http = require("http");
+// const app = express();
+// const server = http.createServer(app);
+// const WebSocket = require("ws");
+// const wss = new WebSocket.Server({ server });
+
+// wss.on('connection', (webSocketClient) => {
+//     webSocketClient.send('{ "connection" : "ok"}');
+//     webSocketClient.on('message', (message) => { wss.clients.forEach( client => { client.send(`{ "message" : ${message} }`) });
+//     });
+// });
+
+// const broadcast = (data, ws) => {
+//   wss.clients.forEach(client => {
+//     if (client.readyState === WebSocket.OPEN && client !== ws) {
+//       client.send(JSON.stringify(data))
+//     }
+//   })
+// }
+
+// wss.on('connection', ws => {
+//   ws.on('')
+// })
+
+// app.get('/api/:term', (req, res) => {
+//   let term = req.params.term;
+
+//   if(term.includes(' ')) {
+
+//     term = term.replace(' ', '+');
+//     fetch(`https://api.datamuse.com/words?ml=${term}&max=5`)
+//     .then(terms => terms.json())
+//     .then(json => res.send(json))
+//     .catch(err => console.log(err));
+    
+//   } else {
+
+//     fetch(`https://api.datamuse.com/words?rel_trg=${term}&max=5`)
+//     .then(terms => terms.json())
+//     .then(json => res.send(json))
+//     .catch(err => console.log(err));
+//   }
+// })
+
+// server.listen(serverPort, () => {console.log(`Websocket server started on port ` + serverPort) });
+
+
+// //we could have a single user setup the game, entering in the length of rounds, number of rounds, and the keyword and then send the game state to this server. 
+// //This server could then request each user input their team name
+// //This server could then disseminate the game state to all connected users
+// //That gamestate could be used to create identical games across all users
+// //this server could then issue a command to begin round one and start a timer
+// //when the timer ends the server could refuse any more answers (somehow)
 

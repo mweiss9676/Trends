@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm } from './Actions/game-actions';
+import openSocket from 'socket.io-client';
+
+import TeamName from './TeamName';
 import Confirm from './Confirm';
 
 class Form extends React.Component {
@@ -24,11 +27,6 @@ class Form extends React.Component {
                     name: 'lengthOfRounds',
                     placeholder: '...1 minute 30 seconds'
                 },
-                {   message: 'Alright, what\'s your team name?',
-                    type: 'text',
-                    name: 'teamName',
-                    placeholder: '...Blue Baracudas'
-                },
                 {
                     message: 'Okie Doke, what is the our topic-term for this game?',
                     type: 'text',
@@ -40,7 +38,15 @@ class Form extends React.Component {
             searchFieldText: '',
             warningText: null,
             warningVisible: false,
+            isCaptain: false,
+            socket: openSocket('http://localhost:5000')
         }
+
+        this.state.socket.on('isCaptain', isCaptain => {
+            this.setState({
+                isCaptain: true
+            })
+        })
 
         this.handleChange = this.handleChange.bind(this);
         this.updatePage = this.updatePage.bind(this);
@@ -105,7 +111,7 @@ class Form extends React.Component {
     }
 
     render() {
-        if(this.state.page < this.state.questions.length){
+        if(this.state.page < this.state.questions.length && this.state.isCaptain){
             return (
                 <form onSubmit={ this.updatePage }>
                     <div className="setup">
@@ -128,6 +134,10 @@ class Form extends React.Component {
                         </div>
                     </div>
                 </form>
+            )
+        }  else if (!this.state.isCaptain) {
+            return (
+                <TeamName />
             )
         } else {
             return (

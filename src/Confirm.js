@@ -37,7 +37,6 @@ class Confirm extends React.Component {
                     <h1 contentEditable="true">Number of rounds: { this.props.numberRounds }</h1>
                     <h1 contentEditable="true">Length of rounds: { this.props.timePerRound }</h1>
                     <h1 contentEditable="true">Number of teams: { this.props.numberTeams }</h1>
-                    <h1 contentEditable="true">Team name: { this.props.teamName }</h1>
                     <button onClick={ () => {
                         //parse the time here
                         const parsed = this.parseTime(this.props.timePerRound);
