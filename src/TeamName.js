@@ -19,7 +19,6 @@ class TeamName extends React.Component {
         this.setState({
             teamNameText: event.target.value
         })
-        console.log(event.target.value)
     }
 
     handleSubmit(event) {

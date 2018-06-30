@@ -44,6 +44,11 @@ io.on('connection', function(socket) {
     socket.emit('isCaptain', true);
   }
 
+  io.on('gameState', gameState => {
+    return
+  })
+
+
   
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm } from './Actions/game-actions';
+import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm, setTeamName } from './Actions/game-actions';
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -64,14 +64,16 @@ const mapStateToProps = state => ({
     numberRounds: state.numberRounds,
     timePerRound: state.timePerRound,
     numberTeams: state.numberTeams,
-    topicTerm: state.topicTerm
+    topicTerm: state.topicTerm,
+    teamName: state.teamName
 })
 
 const mapActionsToProps = {
     onSetNumberRounds : setNumberRounds,
     onSetLengthRounds: setLengthRounds,
     onSetNumberTeams: setNumberTeams,
-    onSetTopicTerm: setTopicTerm
+    onSetTopicTerm: setTopicTerm, 
+    onSetTeamName: setTeamName
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Confirm);

@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import openSocket from 'socket.io-client';
 
 import { lengthOfGameReducer, numberOfRoundsReducer, termsReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
 
+const socket = openSocket('http://localhost:5000');
 
 const allReducers = combineReducers({
     timePerRound: lengthOfGameReducer,
@@ -20,11 +22,18 @@ const allReducers = combineReducers({
     teamName: teamNameReducer
 })
 
+const socketMiddleware = store => next => action => {
+    socket.emit('gameState', JSON.stringify(store.getState()));
+    console.log(JSON.stringify(store.getState()));
+    next(action);
+}
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     allReducers,
-    window.devToolsExtension && window.devToolsExtension()
+    composeEnhancers(applyMiddleware(socketMiddleware))
 );
-
 
 ReactDOM.render(
     <Provider store={ store }>
