@@ -10,7 +10,7 @@ class Searchbar extends React.Component{
 
         this.state = {
             socket: openSocket('http://localhost:5000'),
-            currentTerm: ''
+            currentTerm: 'waffles'
         }
 
         this.state.socket.on('term', term => {

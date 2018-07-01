@@ -38,19 +38,26 @@ class Form extends React.Component {
             searchFieldText: '',
             warningText: null,
             warningVisible: false,
-            isCaptain: true,
-            socket: openSocket('http://localhost:5000')
+            isCaptain: null,
         }
 
-        this.state.socket.on('isCaptain', isCaptain => {
-            this.setState({
-                isCaptain: true
-            })
+        this.socket = openSocket('http://localhost:5000')
+
+        this.socket.on('isCaptain', function(isCaptain) {
+            penis(true)
         })
 
         this.handleChange = this.handleChange.bind(this);
         this.updatePage = this.updatePage.bind(this);
+
+        
+        const penis = bool => {
+            this.setState({
+                isCaptain: bool
+            });
+        }
     }
+
 
     updatePage(event) {
 
@@ -111,7 +118,7 @@ class Form extends React.Component {
     }
 
     render() {
-        if(this.state.page < this.state.questions.length && this.state.isCaptain){
+        if(this.state.page < this.state.questions.length && this.state.isCaptain === true){
             return (
                 <form onSubmit={ this.updatePage }>
                     <div className="setup">
@@ -135,7 +142,7 @@ class Form extends React.Component {
                     </div>
                 </form>
             )
-        }  else if (!this.state.isCaptain) {
+        }  else if (this.state.isCaptain === false) {
             return (
                 <TeamName />
             )

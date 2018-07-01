@@ -29,10 +29,6 @@ const socketMiddleware = store => next => action => {
     console.log(JSON.stringify(store.getState()));
 }
 
-socket.on('term', term => {
-    setCurrentTerm(term);
-})
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

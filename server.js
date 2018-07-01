@@ -1,7 +1,18 @@
 const fetch = require('node-fetch');
-const express = require("express");
-const server = require('http').createServer();
-const io = require('socket.io')(server);
+// const express = require("express");
+// const server = require('http').createServer();
+// const io = require('socket.io')(server);
+
+// const port = 5000
+// io.listen(port)
+// console.log('Listening on port ' + port + '...')
+
+
+var app = require('express')();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+
 /*
 one person will set up the game
 there will be a socket connection made on the first person to connect
@@ -45,12 +56,13 @@ function reset() {
 
 io.on('connection', function(socket) {
 
-  if(gameCaptain === null) {
-    gameCaptain = socket;
-    socket.emit('isCaptain', true);
-  }
+  socket.emit('isCaptain', true)
 
   socket.on('connect', function() {
+    if(gameCaptain === null) {
+      gameCaptain = socket;
+      socket.emit('isCaptain', true);
+    }
     totalConnections++;
   })
 
@@ -84,7 +96,7 @@ io.on('connection', function(socket) {
         fetch(`https://api.datamuse.com/words?rel_trg=${term}&max=5`)
           .then(terms => terms.json())
           .then(json => gameTerms.push(...json))
-          .then(io.emit(gameTerms[0]))
+          .then(() => io.emit('term', gameTerms[0]))
           .catch(err => console.log(err));
     }
 
@@ -96,10 +108,7 @@ io.on('connection', function(socket) {
 });
 
 
-reset()
-const port = 5000
-io.listen(port)
-console.log('Listening on port ' + port + '...')
+server.listen(5000);
 
 
 
