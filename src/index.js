@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import openSocket from 'socket.io-client';
 
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
 import { lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
-import { setCurrentTerm } from './Actions/game-actions';
+//import { setCurrentTerm } from './Actions/game-actions';
 
 const socket = openSocket('http://localhost:5000');
 
@@ -29,11 +29,18 @@ const socketMiddleware = store => next => action => {
     console.log(JSON.stringify(store.getState()));
 }
 
+const otherMiddleware = store => next => action => {
+    next(action);
+    socket.on('captain', function(data) {
+        console.log(`the message is: ${data}`);
+    })
+}
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     allReducers,
-    composeEnhancers(applyMiddleware(socketMiddleware))
+    composeEnhancers(applyMiddleware(socketMiddleware, otherMiddleware))
 );
 
 ReactDOM.render(

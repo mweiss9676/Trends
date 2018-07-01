@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import openSocket from 'socket.io-client';
 
 import search from './images/search.png';
 
@@ -9,15 +8,8 @@ class Searchbar extends React.Component{
         super(props);
 
         this.state = {
-            socket: openSocket('http://localhost:5000'),
             currentTerm: 'waffles'
         }
-
-        this.state.socket.on('term', term => {
-            this.setState({
-                currentTerm: term
-            })
-        })
     }
 
     render(){

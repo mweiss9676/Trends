@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm } from './Actions/game-actions';
-import openSocket from 'socket.io-client';
 
 import TeamName from './TeamName';
 import Confirm from './Confirm';
@@ -38,20 +37,13 @@ class Form extends React.Component {
             searchFieldText: '',
             warningText: null,
             warningVisible: false,
-            isCaptain: null,
+            isCaptain: false
         }
-
-        this.socket = openSocket('http://localhost:5000')
-
-        this.socket.on('isCaptain', function(isCaptain) {
-            penis(true)
-        })
 
         this.handleChange = this.handleChange.bind(this);
         this.updatePage = this.updatePage.bind(this);
 
-        
-        const penis = bool => {
+        const setCaptain = bool => {
             this.setState({
                 isCaptain: bool
             });
