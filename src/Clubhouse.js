@@ -1,5 +1,5 @@
 import React from 'react';
-import { Searchbar } from './Searchbar.js'
+import Searchbar from './Searchbar.js'
 import { TeamComponent } from './Team.js';
 import { connect } from 'react-redux';
 import './App.css';
@@ -13,8 +13,8 @@ class Clubhouse extends React.Component {
     render(){
         return(
             <div className="clubhouse">
-                <TeamComponent />,
-                <TeamComponent />,
+                <TeamComponent />
+                <TeamComponent />
                 <TeamComponent />
             </div>
         )

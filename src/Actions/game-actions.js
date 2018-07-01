@@ -68,4 +68,15 @@ export function setTeamName(teamName){
 }
 
 
+export function setCurrentTerm(currentTerm){
+    if(currentTerm !== undefined) {
+        return {
+            type: CURRENT_TERM,
+            payload: {
+                currentTerm: currentTerm
+            }
+        }
+    }
+}
+
 

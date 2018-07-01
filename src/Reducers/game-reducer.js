@@ -9,7 +9,7 @@ export function lengthOfGameReducer(state = 60000, { type, payload }) {
     }
 }
 
-export function termsReducer(state = [], { type, payload }) {
+export function currentTermReducer(state = [], { type, payload }) {
     switch(type) {
         case CURRENT_TERM: 
             return payload.currentTerm;

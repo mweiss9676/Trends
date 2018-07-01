@@ -26,6 +26,9 @@ let gamePassCode = null;
 let roundLength = null;
 let numberRounds = null;
 let isGameSetup = false;
+let numberTeams = null;
+let terms = [];
+let totalConnections = 0;
 
 function reset() {
   gameCaptain = null;
@@ -35,6 +38,9 @@ function reset() {
   roundLength = null;
   numberRounds = null;
   isGameSetup = false;
+  numberTeams = null;
+  gameTerms = [];
+  totalConnections = 0;
 }
 
 io.on('connection', function(socket) {
@@ -44,9 +50,46 @@ io.on('connection', function(socket) {
     socket.emit('isCaptain', true);
   }
 
-  io.on('gameState', gameState => {
-    return
+  socket.on('connect', function() {
+    totalConnections++;
   })
+
+  socket.on('disconnect', function() {
+    totalConnections--;
+  })
+  
+  if (numberTeams === totalConnections){
+    isGameSetup = true;
+  } else if (numberTeams < totalConnections) {
+    socket.terminate();
+  }
+
+  io.on('gameState', gameState => {
+    roundLength = gameState.timePerRound;
+    numberRounds = gameState.numberRounds;
+    keyword = gameState.topicTerm;
+    numberTeams = gameState.numberTeams;
+  })
+
+
+  if(isGameSetup) {
+
+    if(keyword.includes(' ')) {
+      keyword = keyword.replace(' ', '+');
+        fetch(`https://api.datamuse.com/words?ml=${term}&max=5`)
+          .then(terms => terms.json())
+          .then(json => gameTerms.push(...json))
+          .catch(err => console.log(err));
+    } else {
+        fetch(`https://api.datamuse.com/words?rel_trg=${term}&max=5`)
+          .then(terms => terms.json())
+          .then(json => gameTerms.push(...json))
+          .then(io.emit(gameTerms[0]))
+          .catch(err => console.log(err));
+    }
+
+
+  }
 
 
   

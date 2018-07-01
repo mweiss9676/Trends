@@ -7,14 +7,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import openSocket from 'socket.io-client';
 
-import { lengthOfGameReducer, numberOfRoundsReducer, termsReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
+import { lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
+import { setCurrentTerm } from './Actions/game-actions';
 
 const socket = openSocket('http://localhost:5000');
 
 const allReducers = combineReducers({
     timePerRound: lengthOfGameReducer,
     numberRounds: numberOfRoundsReducer,
-    terms: termsReducer,
+    currentTerm: currentTermReducer,
     trendsInfo: trendsInfoReducer,
     teamTotals: teamTotalsReducer,
     numberTeams: numberOfTeamsReducer, 
@@ -23,10 +24,14 @@ const allReducers = combineReducers({
 })
 
 const socketMiddleware = store => next => action => {
+    next(action);
     socket.emit('gameState', JSON.stringify(store.getState()));
     console.log(JSON.stringify(store.getState()));
-    next(action);
 }
+
+socket.on('term', term => {
+    setCurrentTerm(term);
+})
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

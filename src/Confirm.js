@@ -42,10 +42,10 @@ class Confirm extends React.Component {
                         const parsed = this.parseTime(this.props.timePerRound);
                         this.props.onSetLengthRounds(parsed);
                         
-                        fetch(`/api/${ this.props.topicTerm }`)
-                        .then(res => res.json())
-                        .then(json => console.log(json))
-                        .catch(err => console.log(`error is ${err}`))
+                        // fetch(`/api/${ this.props.topicTerm }`)
+                        // .then(res => res.json())
+                        // .then(json => console.log(json))
+                        // .catch(err => console.log(`error is ${err}`))
 
                         this.setState({
                             confirmed: true

@@ -38,7 +38,7 @@ class Form extends React.Component {
             searchFieldText: '',
             warningText: null,
             warningVisible: false,
-            isCaptain: false,
+            isCaptain: true,
             socket: openSocket('http://localhost:5000')
         }
 
