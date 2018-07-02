@@ -22,13 +22,25 @@ const state = {
 }
 
 io.on('connection', function(socket){
+
   console.log(`${socket.id} connected`)
 
   if (state.captain === null) {
     state.captain = socket;
   }
 
-  socket.on('gameState', function() {
+
+  socket.on('gameState', function(store) {
     socket.emit('captain', `${state.captain.id}`);
+    socket.emit('nerd', 'I am a nerd');
+    
+    const data = JSON.parse(store);
+
+    gameState.timePerRound = data.timePerRound;
+    gameState.numberRounds = data.numberRounds;
+    gameState.currentTerm = data.currentTerm;
+    gameState.numberTeams = data.numberTeams;
+
+    console.log(gameState.numberRounds);
   })
 })

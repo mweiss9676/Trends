@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Clubhouse, { TopPart } from './Clubhouse.js';
-import Form from './Setup.js';
+import Form from './Form';
+import Setup from './Setup';
 
 
 class App extends Component {
@@ -12,7 +13,7 @@ class App extends Component {
   render() {
     return (
         <div className="app">
-          <Form />
+          <Setup />
           <TopPart />
           <Clubhouse />
         </div>
