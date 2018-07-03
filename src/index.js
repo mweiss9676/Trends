@@ -7,7 +7,7 @@ import openSocket from 'socket.io-client';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { otherMiddleware } from './websocket';
+import { otherMiddleware, captainMiddleware } from './websocket';
 import { lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, topicTermReducer, teamNameReducer } from './Reducers/game-reducer';
 
 export const socket = openSocket('http://localhost:5000');
@@ -24,15 +24,16 @@ const allReducers = combineReducers({
 })
 
 const socketMiddleware = store => next => action => {
-    next(action);
     socket.emit('gameState', JSON.stringify(store.getState()));
     console.log(JSON.stringify(store.getState()));
+    next(action);
+
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     allReducers,
-    composeEnhancers(applyMiddleware(socketMiddleware, otherMiddleware))
+    composeEnhancers(applyMiddleware(socketMiddleware, otherMiddleware, captainMiddleware))
 );
 
 ReactDOM.render(

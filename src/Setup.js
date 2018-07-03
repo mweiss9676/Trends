@@ -17,6 +17,10 @@ class Setup extends React.Component {
     }
 
     hideSetup = () => {
+
+        this.props.dispatch({
+            type: 'SET_CAPTAIN',
+        });
         this.setState({
             showForm: true
         })
@@ -56,11 +60,4 @@ const mapStateToProps = state => ({
     topicTerm: state.topicTerm
 })
 
-const mapActionsToProps = {
-    onSetNumberRounds : setNumberRounds,
-    onSetLengthRounds: setLengthRounds,
-    onSetNumberTeams: setNumberTeams,
-    onSetTopicTerm: setTopicTerm
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(Setup);
+export default connect(mapStateToProps)(Setup);

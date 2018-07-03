@@ -9,6 +9,7 @@ var server = app.listen(5000, function() {
 
 const io = socket(server);
 
+
 const gameState = {
   timePerRound: null,
   numberRounds: null,
@@ -25,13 +26,14 @@ io.on('connection', function(socket){
 
   console.log(`${socket.id} connected`)
 
-  if (state.captain === null) {
-    state.captain = socket;
-  }
+  socket.on('setCaptain', id => {
+    state.captain = id;
+    console.log(state.captain)
+  })
 
 
   socket.on('gameState', function(store) {
-    socket.emit('captain', `${state.captain.id}`);
+    // socket.emit('captain', `${state.captain.id}`);
     socket.emit('nerd', 'I am a nerd');
     
     const data = JSON.parse(store);
