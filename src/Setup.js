@@ -9,26 +9,21 @@ class Setup extends React.Component {
         super(props);
 
         this.state = {
-            showForm: false,
-            waiting: false
+            showButton: true
         }
 
         this.hideSetup = this.hideSetup.bind(this);
     }
 
     hideSetup = () => {
-
         this.props.dispatch({
-            type: 'SET_CAPTAIN',
+            type: 'SET_CAPTAIN'
         });
-        this.setState({
-            showForm: true
-        })
     }
     
 
     render() {
-        if (this.state.showForm === false){
+        if (this.props.isCaptain === ''){
             return(
                 <div className="setupFirst">
                     <div className="setupInterior">
@@ -38,26 +33,24 @@ class Setup extends React.Component {
                     </div>
                 </div>
             )
-        } else if (this.state.waiting === true) {
-            return (
+        } else if (this.props.isWaiting === true) {
+            return(
                 <div className="setupFirst">
                     <div className="setupInterior">
-                        <h1>waiting...</h1>
+                        <h1>Waiting...</h1>
                     </div>
                 </div>
             )
         } else {
-            return <Form />
+            return (<Form />)
         }
     }
 }
 
 const mapStateToProps = state => ({
-    timer: state.timer,
-    numberRounds: state.numberRounds,
-    timePerRound: state.timePerRound,
-    numberTeams: state.numberTeams,
-    topicTerm: state.topicTerm
+    isCaptain: state.isCaptain, 
+    isWaiting: state.isWaiting
 })
+
 
 export default connect(mapStateToProps)(Setup);

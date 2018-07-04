@@ -1,4 +1,4 @@
-import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, TOPIC_TERM, TEAM_NAME } from '../Actions/game-actions';
+import { CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, TOPIC_TERM, TEAM_NAME, IS_CAPTAIN, IS_WAITING } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -67,6 +67,24 @@ export function teamNameReducer(state = '', { type, payload }) {
     switch(type) {
         case TEAM_NAME: 
             return payload.teamName;
+        default: 
+            return state
+    }
+}
+
+export function isCaptainReducer(state = '', { type, payload }) {
+    switch(type) {
+        case IS_CAPTAIN: 
+            return payload.isCaptain;
+        default: 
+            return state
+    }
+}
+
+export function isWaitingReducer(state = '', { type, payload }) {
+    switch(type) {
+        case IS_WAITING: 
+            return payload.isWaiting;
         default: 
             return state
     }

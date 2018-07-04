@@ -6,6 +6,9 @@ export const TEAM_TOTALS = 'TEAM_TOTALS';
 export const NUMBER_TEAMS = 'NUMBER_TEAMS';
 export const TOPIC_TERM = 'TOPIC_TERM';
 export const TEAM_NAME = 'TEAM_NAME';
+export const IS_CAPTAIN = 'IS_CAPTAIN';
+export const IS_WAITING = 'IS_WAITING';
+export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 
 
 export function setNumberRounds(numberRounds){
@@ -79,4 +82,33 @@ export function setCurrentTerm(currentTerm){
     }
 }
 
+export function setIsCaptain(isCaptain){
+    if(isCaptain !== undefined) {
+        return {
+            type: IS_CAPTAIN,
+            payload: {
+                isCaptain: isCaptain
+            }
+        }
+    }
+}
 
+export function setIsWaiting(isWaiting) {
+    if(isWaiting !== undefined){
+        return {
+            type: IS_WAITING,
+            payload: {
+                isWaiting: isWaiting
+            }
+        }
+    }
+}
+
+export function confirmSettings(store) {
+    return {
+        type: CONFIRM_SETTINGS,
+        payload: {
+            store: store
+        }
+    }
+}

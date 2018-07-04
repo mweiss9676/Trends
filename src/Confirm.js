@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNumberRounds, setLengthRounds, setNumberTeams, setTopicTerm, setTeamName } from './Actions/game-actions';
+
+import { setLengthRounds, confirmSettings } from './Actions/game-actions';
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -41,15 +42,13 @@ class Confirm extends React.Component {
                         //parse the time here
                         const parsed = this.parseTime(this.props.timePerRound);
                         this.props.onSetLengthRounds(parsed);
-                        
-                        // fetch(`/api/${ this.props.topicTerm }`)
-                        // .then(res => res.json())
-                        // .then(json => console.log(json))
-                        // .catch(err => console.log(`error is ${err}`))
 
                         this.setState({
                             confirmed: true
                         });
+
+                        this.props.confirmSettings()
+
                     } }>Looks good!</button>
                 </div>
             )
@@ -69,11 +68,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = {
-    onSetNumberRounds : setNumberRounds,
     onSetLengthRounds: setLengthRounds,
-    onSetNumberTeams: setNumberTeams,
-    onSetTopicTerm: setTopicTerm, 
-    onSetTeamName: setTeamName
+    confirmSettings: confirmSettings
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Confirm);

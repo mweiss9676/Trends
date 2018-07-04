@@ -27,14 +27,22 @@ io.on('connection', function(socket){
   console.log(`${socket.id} connected`)
 
   socket.on('setCaptain', id => {
-    state.captain = id;
-    console.log(state.captain)
-  })
+    if(state.captain === null) {
+      state.captain = id;
+      console.log(`captain is socket.id: ${state.captain}`);
 
+      socket.broadcast.emit('waiting', true);
+      socket.broadcast.emit('isCaptain', false)
+      socket.emit('isCaptain', true);
+    }
+  }) 
+
+  if (state.captain !== null && socket.id !== state.captain) {
+    socket.emit('isCaptain', false);
+    socket.emit('waiting', true);
+  }
 
   socket.on('gameState', function(store) {
-    // socket.emit('captain', `${state.captain.id}`);
-    socket.emit('nerd', 'I am a nerd');
     
     const data = JSON.parse(store);
 
@@ -43,6 +51,9 @@ io.on('connection', function(socket){
     gameState.currentTerm = data.currentTerm;
     gameState.numberTeams = data.numberTeams;
 
-    console.log(gameState.numberRounds);
+    console.log(`the timePerRound is ${gameState.timePerRound}`);
+    console.log(`the numberRounds is ${gameState.numberRounds}`);
+    console.log(`the numberTeams is ${gameState.numberTeams}`);
+    console.log(`the currentTerm is ${gameState.currentTerm}`);
   })
 })
