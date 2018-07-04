@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { setLengthRounds, confirmSettings } from './Actions/game-actions';
+import TeamName from './TeamName'
 
 class Confirm extends React.Component {
     constructor(props) {
@@ -53,7 +54,9 @@ class Confirm extends React.Component {
                 </div>
             )
         } else {
-            return null
+            return (
+                <TeamName />
+            )
         }
     }
 }

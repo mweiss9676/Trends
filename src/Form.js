@@ -110,7 +110,7 @@ class Form extends React.Component {
     }
 
     render() {
-        if(this.state.page < this.state.questions.length && this.state.isSetup === false){
+        if(this.state.page < this.state.questions.length && this.props.isCaptain === true){
             return (
                 <form onSubmit={ this.updatePage }>
                     <div className="setup">
@@ -134,13 +134,13 @@ class Form extends React.Component {
                     </div>
                 </form>
             )
-        }  else if (this.state.isSetup === true) {
+        }  else if (this.props.isCaptain === true) {
             return (
-                <TeamName />
+                <Confirm />
             )
         } else {
             return (
-                <Confirm />
+                <TeamName />
             )
         }
     }
@@ -151,7 +151,8 @@ const mapStateToProps = state => ({
     numberRounds: state.numberRounds,
     timePerRound: state.timePerRound,
     numberTeams: state.numberTeams,
-    gameKeyword: state.gameKeyword
+    gameKeyword: state.gameKeyword,
+    isCaptain: state.isCaptain
 })
 
 const mapActionsToProps = {

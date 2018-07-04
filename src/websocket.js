@@ -13,7 +13,8 @@ socket.on('waiting', function(bool) {
 })
 
 socket.on('startRound', function(term) {
-    console.log(term)
+    console.log(term);
+    store.dispatch(setIsWaiting(false));
 })
 
 export const confirmGameSettingsMiddleware = store => next => action => {
