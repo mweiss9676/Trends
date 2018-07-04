@@ -15,7 +15,8 @@ const gameState = {
   numberRounds: null,
   currentTerm: null,
   numberTeams: null,
-  topicTerm: null
+  topicTerm: null,
+  roundKeywords: []
 }
 
 const state = {
@@ -40,6 +41,8 @@ io.on('connection', function(socket){
   if (state.captain !== null && socket.id !== state.captain) {
     socket.emit('isCaptain', false);
     socket.emit('waiting', true);
+  } else if (state.captain === socket.id) {
+    socket.emit('isCaptain', true);
   }
 
   socket.on('gameState', function(store) {
@@ -48,12 +51,29 @@ io.on('connection', function(socket){
 
     gameState.timePerRound = data.timePerRound;
     gameState.numberRounds = data.numberRounds;
-    gameState.currentTerm = data.currentTerm;
+    gameState.currentTerm = data.gameKeyword;
     gameState.numberTeams = data.numberTeams;
 
-    console.log(`the timePerRound is ${gameState.timePerRound}`);
-    console.log(`the numberRounds is ${gameState.numberRounds}`);
-    console.log(`the numberTeams is ${gameState.numberTeams}`);
-    console.log(`the currentTerm is ${gameState.currentTerm}`);
+
+    let term = gameState.currentTerm;
+    let datamuseURL;
+
+    if(term.includes(' ')) {
+      term = term.replace(' ', '+');
+      datamuseURL = `https://api.datamuse.com/words?ml=${term}&max=${gameState.numberRounds}`;
+    } else {
+      datamuseURL = `https://api.datamuse.com/words?rel_trg=${term}&max=${gameState.numberRounds}`;
+    }
+
+    fetch(datamuseURL)
+      .then(terms => terms.json())
+      .then(words => gameState.roundKeywords.push(...words))
+      .then(() => console.log(gameState.roundKeywords))
+      .then(() => runGame())
+      .catch(err => console.log(err));    
   })
 })
+
+const runGame = () => {
+  io.emit('startRound', gameState.roundKeywords.pop());
+}

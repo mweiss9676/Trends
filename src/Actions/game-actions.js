@@ -4,7 +4,7 @@ export const NUMBER_ROUNDS = 'NUMBER_ROUNDS';
 export const TRENDS_INFO = 'TRENDS_INFO';
 export const TEAM_TOTALS = 'TEAM_TOTALS';
 export const NUMBER_TEAMS = 'NUMBER_TEAMS';
-export const TOPIC_TERM = 'TOPIC_TERM';
+export const GAME_KEYWORD = 'GAME_KEYWORD';
 export const TEAM_NAME = 'TEAM_NAME';
 export const IS_CAPTAIN = 'IS_CAPTAIN';
 export const IS_WAITING = 'IS_WAITING';
@@ -48,12 +48,12 @@ export function setNumberTeams(numberTeams){
     }
 }
 
-export function setTopicTerm(topicTerm) {
-    if (topicTerm !== undefined) {
+export function setGameKeyword(gameKeyword) {
+    if (gameKeyword !== undefined) {
         return {
-            type: TOPIC_TERM,
+            type: GAME_KEYWORD,
             payload: {
-                topicTerm: topicTerm
+                gameKeyword: gameKeyword
             }
         }
     }

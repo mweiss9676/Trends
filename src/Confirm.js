@@ -8,7 +8,7 @@ class Confirm extends React.Component {
         super(props);
 
         this.state = {
-            confirmed: false
+            showForm: true
         }
 
         this.parseTime = this.parseTime.bind(this);
@@ -31,10 +31,10 @@ class Confirm extends React.Component {
     }
 
     render() {
-        if (this.state.confirmed === false) {
+        if (this.state.showForm === true) {
             return (
                 <div className="setupInterior">
-                    <h1 contentEditable="true">Topic Term: { this.props.topicTerm }</h1>
+                    <h1 contentEditable="true">Topic Term: { this.props.gameKeyword }</h1>
                     <h1 contentEditable="true">Number of rounds: { this.props.numberRounds }</h1>
                     <h1 contentEditable="true">Length of rounds: { this.props.timePerRound }</h1>
                     <h1 contentEditable="true">Number of teams: { this.props.numberTeams }</h1>
@@ -44,7 +44,7 @@ class Confirm extends React.Component {
                         this.props.onSetLengthRounds(parsed);
 
                         this.setState({
-                            confirmed: true
+                            showForm: false
                         });
 
                         this.props.confirmSettings()
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
     numberRounds: state.numberRounds,
     timePerRound: state.timePerRound,
     numberTeams: state.numberTeams,
-    topicTerm: state.topicTerm,
+    gameKeyword: state.gameKeyword,
     teamName: state.teamName
 })
 

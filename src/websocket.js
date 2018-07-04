@@ -12,6 +12,10 @@ socket.on('waiting', function(bool) {
     store.dispatch(setIsWaiting(bool))
 })
 
+socket.on('startRound', function(term) {
+    console.log(term)
+})
+
 export const confirmGameSettingsMiddleware = store => next => action => {
     if(action.type === 'CONFIRM_SETTINGS') {
         socket.emit('gameState', JSON.stringify(store.getState()));
