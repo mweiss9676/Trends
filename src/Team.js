@@ -10,7 +10,9 @@ export class TeamComponent extends React.Component {
     }
     render(){
         return (
-            <div className="teamComponent"></div>
+            <div className="teamComponent">
+                <h1>{ this.props.name }</h1>
+            </div>
         )
     }
 }

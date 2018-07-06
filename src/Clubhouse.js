@@ -6,16 +6,20 @@ import './App.css';
 
 
 class Clubhouse extends React.Component {
-    // constructor(props) {
-    //     super(props)
-    // }
-
+    constructor(props) {
+        super(props)
+    }
     render(){
         return(
             <div className="clubhouse">
-                <TeamComponent />
-                <TeamComponent />
-                <TeamComponent />
+                { this.props.takenNames.map(team => {
+                    if(team.teamName !== this.props.teamName) {
+                        return (
+                            <TeamComponent name={ team.teamName } />
+                        )
+                    }
+                }) }
+                <TeamComponent name={ this.props.teamName } />
             </div>
         )
     }
@@ -40,7 +44,8 @@ export class TopPart extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    numberTeams: state.numberTeams,
+    takenNames: state.takenNames,
+    teamName: state.teamName
 })
 
 export default connect(mapStateToProps)(Clubhouse);
