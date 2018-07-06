@@ -9,6 +9,7 @@ export const TEAM_NAME = 'TEAM_NAME';
 export const IS_CAPTAIN = 'IS_CAPTAIN';
 export const IS_WAITING = 'IS_WAITING';
 export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
+export const RESTRICTED_NAME = 'RESTRICTED_NAME';
 
 
 export function setNumberRounds(numberRounds){
@@ -112,3 +113,16 @@ export function confirmSettings(store) {
         }
     }
 }
+
+export function setTakenName(takenName) {
+    if (takenName !== undefined) {
+        return {
+            type: RESTRICTED_NAME,
+            payload: {
+                takenName: takenName
+            }
+        }
+    }
+}
+
+

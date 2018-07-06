@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting } from './Actions/game-actions';
+import { setIsCaptain, setIsWaiting, setTakenName } from './Actions/game-actions';
 
 const socket = io('http://localhost:5000');
 
@@ -17,6 +17,11 @@ socket.on('startRound', function(term) {
     store.dispatch(setIsWaiting(false));
 })
 
+socket.on('takenNames', function(name) {
+    console.log(`the taken names are ${name}`);
+    store.dispatch(setTakenName(JSON.parse(name)))
+})
+
 export const confirmGameSettingsMiddleware = store => next => action => {
     if(action.type === 'CONFIRM_SETTINGS') {
         socket.emit('gameState', JSON.stringify(store.getState()));
@@ -28,6 +33,14 @@ export const confirmGameSettingsMiddleware = store => next => action => {
 export const captainMiddleware = store => next => action => {
     if(action.type === 'SET_CAPTAIN') {
         socket.emit('setCaptain', socket.id)
+    }
+
+    next(action)
+}
+
+export const teamNamesMiddleware = store => next => action => {
+    if (action.type === 'TEAM_NAME') {
+        socket.emit('teamName', action.payload)
     }
 
     next(action)

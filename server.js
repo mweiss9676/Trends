@@ -16,7 +16,8 @@ const gameState = {
   currentTerm: null,
   numberTeams: null,
   topicTerm: null,
-  roundKeywords: []
+  roundKeywords: [], 
+  teams: []
 }
 
 const state = {
@@ -44,6 +45,12 @@ io.on('connection', function(socket){
   } else if (state.captain === socket.id) {
     socket.emit('isCaptain', true);
   }
+
+  socket.on('teamName', function(teamName) {
+    gameState.teams.push(teamName);
+    io.emit('takenNames', JSON.stringify(teamName))
+    console.log(` this is what is in teamName: ${JSON.stringify(teamName)}`)
+  })
 
   socket.on('gameState', function(store) {
     
