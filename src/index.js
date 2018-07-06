@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware } from './websocket';
-import { takenNamesReducer, lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, gameKeywordReducer, teamNameReducer, isCaptainReducer, isWaitingReducer } from './Reducers/game-reducer';
+import { takenNamesReducer, lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, gameKeywordReducer, isCaptainReducer, isWaitingReducer, teamNameColorReducer } from './Reducers/game-reducer';
 
 
 const allReducers = combineReducers({
@@ -18,7 +18,7 @@ const allReducers = combineReducers({
     teamTotals: teamTotalsReducer,
     numberTeams: numberOfTeamsReducer, 
     gameKeyword: gameKeywordReducer,
-    teamName: teamNameReducer,
+    teamNameColor: teamNameColorReducer,
     isCaptain: isCaptainReducer, 
     isWaiting: isWaitingReducer,
     takenNames: takenNamesReducer

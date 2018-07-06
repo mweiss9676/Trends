@@ -5,11 +5,11 @@ export const TRENDS_INFO = 'TRENDS_INFO';
 export const TEAM_TOTALS = 'TEAM_TOTALS';
 export const NUMBER_TEAMS = 'NUMBER_TEAMS';
 export const GAME_KEYWORD = 'GAME_KEYWORD';
-export const TEAM_NAME = 'TEAM_NAME';
 export const IS_CAPTAIN = 'IS_CAPTAIN';
 export const IS_WAITING = 'IS_WAITING';
 export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 export const RESTRICTED_NAME = 'RESTRICTED_NAME';
+export const TEAM_NAME_COLOR = 'TEAM_NAME_COLOR';
 
 
 export function setNumberRounds(numberRounds){
@@ -60,13 +60,12 @@ export function setGameKeyword(gameKeyword) {
     }
 }
 
-export function setTeamName(teamName){
-    if(teamName !== undefined) {
-        return {
-            type: TEAM_NAME,
-            payload: {
-                teamName: teamName
-            }
+export function setTeamNameColor(color, teamName) {
+    return {
+        type: TEAM_NAME_COLOR,
+        payload: {
+            color: color,
+            teamName: teamName
         }
     }
 }
@@ -114,12 +113,14 @@ export function confirmSettings(store) {
     }
 }
 
-export function setTakenName(takenName) {
+export function setTakenName(takenName, takenColor) {
     if (takenName !== undefined) {
         return {
             type: RESTRICTED_NAME,
             payload: {
-                takenName: takenName
+                takenName: takenName,
+                takenColor: takenColor
+                //this is what we need to finish setting up!
             }
         }
     }

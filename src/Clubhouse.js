@@ -13,13 +13,13 @@ class Clubhouse extends React.Component {
         return(
             <div className="clubhouse">
                 { this.props.takenNames.map(team => {
-                    if(team.teamName !== this.props.teamName) {
+                    if(team.teamName !== this.props.teamNameColor.name) {
                         return (
-                            <TeamComponent name={ team.teamName } />
+                            <TeamComponent name={ team.teamName } color={ this.props.teamNameColor.color } />
                         )
                     }
                 }) }
-                <TeamComponent name={ this.props.teamName } />
+                <TeamComponent name={ this.props.teamNameColor.name } color={ this.props.teamNameColor.color } />
             </div>
         )
     }
@@ -45,7 +45,7 @@ export class TopPart extends React.Component {
 
 const mapStateToProps = state => ({
     takenNames: state.takenNames,
-    teamName: state.teamName
+    teamNameColor: state.teamNameColor
 })
 
 export default connect(mapStateToProps)(Clubhouse);

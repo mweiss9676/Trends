@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName } from './Actions/game-actions';
+import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor } from './Actions/game-actions';
 
 const socket = io('http://localhost:5000');
 
@@ -20,6 +20,11 @@ socket.on('startRound', function(term) {
 socket.on('takenNames', function(name) {
     console.log(`the taken names are ${name}`);
     store.dispatch(setTakenName(JSON.parse(name)))
+})
+
+socket.on('teamAndColor', word => {
+    const color = JSON.parse(word)
+    store.dispatch(setTeamNameColor(color[0][0], color[1]))
 })
 
 export const confirmGameSettingsMiddleware = store => next => action => {

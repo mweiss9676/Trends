@@ -24,6 +24,8 @@ const state = {
   captain: null
 }
 
+const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'yellow', 'purple', 'red']
+
 io.on('connection', function(socket){
 
   console.log(`${socket.id} connected`)
@@ -48,8 +50,10 @@ io.on('connection', function(socket){
 
   socket.on('teamName', function(teamName) {
     gameState.teams.push(teamName);
-    io.emit('takenNames', JSON.stringify(teamName))
-    console.log(` this is what is in teamName: ${JSON.stringify(teamName)}`)
+    const color = colors.splice(Math.floor(Math.random() * colors.length), 1);
+    const data = [ color, teamName ];
+    socket.emit('teamAndColor', JSON.stringify(data))
+    io.emit('takenNames', JSON.stringify(data))
   })
 
   socket.on('gameState', function(store) {

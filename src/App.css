@@ -14,6 +14,42 @@
 
 /********************** END  VARIABLES ********************/
 
+/************************* COLORS ***********************/
+/* const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'yellow', 'purple', 'red'] */
+.blue{
+  background-color: blue;
+}
+.orange{
+  background-color: orange;
+}
+.pink{
+  background-color: pink;
+}
+.green{
+  background-color: green;
+}
+.brown{
+  background-color: brown;
+}
+.black{
+  background-color: black;
+}
+.teal{
+  background-color: teal;
+}
+.yellow{
+  background-color: yellow;
+}
+.purple{
+  background-color: purple;
+}
+.red{
+  background-color: red;
+}
+
+
+/********************** END  COLORS ********************/
+
 .app {
   width: 100vw;
   height: 100vh;
@@ -86,7 +122,6 @@ input[type=number]::-webkit-outer-spin-button {
 .teamComponent {
   width: 25vh;
   height: 25vh;
-  background-color: white;
 }
 
 .title {

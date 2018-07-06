@@ -1,4 +1,4 @@
-import { RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, TEAM_NAME, IS_CAPTAIN, IS_WAITING } from '../Actions/game-actions';
+import { RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING, TEAM_NAME_COLOR } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -63,10 +63,13 @@ export function gameKeywordReducer(state = '', { type, payload }) {
     }
 }
 
-export function teamNameReducer(state = '', { type, payload }) {
+export function teamNameColorReducer(state = {}, { type, payload }) {
     switch(type) {
-        case TEAM_NAME: 
-            return payload.teamName;
+        case TEAM_NAME_COLOR: 
+            return {
+                name: payload.teamName, 
+                color: payload.color
+            }
         default: 
             return state
     }
