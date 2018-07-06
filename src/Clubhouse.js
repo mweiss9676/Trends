@@ -13,9 +13,9 @@ class Clubhouse extends React.Component {
         return(
             <div className="clubhouse">
                 { this.props.takenNames.map(team => {
-                    if(team.teamName !== this.props.teamNameColor.name) {
+                    if(team.name !== this.props.teamNameColor.name) {
                         return (
-                            <TeamComponent name={ team.teamName } color={ this.props.teamNameColor.color } />
+                            <TeamComponent name={ team.name } color={ team.color } />
                         )
                     }
                 }) }

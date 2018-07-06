@@ -25,7 +25,7 @@ class TeamName extends React.Component {
             teamNameText: event.target.value
         });
 
-        let restrictedNames = this.props.takenNames.map(name => name.toUpperCase())
+        let restrictedNames = this.props.takenNames.map(name => name.name.toUpperCase())
 
         let nameIsTaken = restrictedNames.includes(event.target.value.toUpperCase())
 

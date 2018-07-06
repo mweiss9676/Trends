@@ -50,9 +50,11 @@ io.on('connection', function(socket){
 
   socket.on('teamName', function(teamName) {
     gameState.teams.push(teamName);
+
     const color = colors.splice(Math.floor(Math.random() * colors.length), 1);
     const data = [ color, teamName ];
-    socket.emit('teamAndColor', JSON.stringify(data))
+
+    socket.emit('teamData', JSON.stringify(data))
     io.emit('takenNames', JSON.stringify(data))
   })
 

@@ -113,14 +113,13 @@ export function confirmSettings(store) {
     }
 }
 
-export function setTakenName(takenName, takenColor) {
+export function setTakenName(takenColor, takenName) {
     if (takenName !== undefined) {
         return {
             type: RESTRICTED_NAME,
             payload: {
                 takenName: takenName,
                 takenColor: takenColor
-                //this is what we need to finish setting up!
             }
         }
     }

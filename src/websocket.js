@@ -17,14 +17,14 @@ socket.on('startRound', function(term) {
     store.dispatch(setIsWaiting(false));
 })
 
-socket.on('takenNames', function(name) {
-    console.log(`the taken names are ${name}`);
-    store.dispatch(setTakenName(JSON.parse(name)))
+socket.on('takenNames', data => {
+    const teamColor = JSON.parse(data)
+    store.dispatch(setTakenName(teamColor[0][0], teamColor[1]))
 })
 
-socket.on('teamAndColor', word => {
-    const color = JSON.parse(word)
-    store.dispatch(setTeamNameColor(color[0][0], color[1]))
+socket.on('teamData', data => {
+    const teamColor = JSON.parse(data)
+    store.dispatch(setTeamNameColor(teamColor[0][0], teamColor[1]))
 })
 
 export const confirmGameSettingsMiddleware = store => next => action => {

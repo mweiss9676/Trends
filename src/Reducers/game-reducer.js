@@ -98,7 +98,10 @@ let initialState = [];
 export function takenNamesReducer (state = initialState, { type, payload }) {
     switch(type) {
         case RESTRICTED_NAME:
-            return [...state, payload.takenName]
+            return [ ...state, { 
+                name: payload.takenName,
+                color: payload.takenColor
+            } ]
         default: 
             return state
     }
