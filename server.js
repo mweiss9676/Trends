@@ -1,6 +1,7 @@
 var fetch = require('node-fetch');
 var express = require('express');
 var socket = require('socket.io');
+const R = require('rambda');
 
 var app = express();
 var server = app.listen(5000, function() {
@@ -14,7 +15,7 @@ const gameState = {
   timePerRound: null,
   numberRounds: null,
   currentTerm: null,
-  numberTeams: null,
+  numberTeams: -1,
   topicTerm: null,
   roundKeywords: [], 
   teams: []
@@ -56,6 +57,11 @@ io.on('connection', function(socket){
 
     socket.emit('teamData', JSON.stringify(data))
     io.emit('takenNames', JSON.stringify(data))
+
+    if(gameState.teams.length == gameState.numberTeams) {
+      startTimer();
+      runGame();
+    }
   })
 
   socket.on('gameState', function(store) {
@@ -82,11 +88,23 @@ io.on('connection', function(socket){
       .then(terms => terms.json())
       .then(words => gameState.roundKeywords.push(...words))
       .then(() => console.log(gameState.roundKeywords))
-      .then(() => runGame())
+      .then(() => io.emit('waiting', false))
       .catch(err => console.log(err));    
   })
 })
 
 const runGame = () => {
-  io.emit('startRound', gameState.roundKeywords.pop());
+  const round = {
+    keyword: gameState.roundKeywords.pop(),
+    roundNumber: R.range(1, (gameState.numberRounds + 1)).shift()
+  }
+  io.emit('startRound', JSON.stringify(round));
 }
+
+const startTimer = () => setInterval(function(){
+  gameState.timePerRound -= 1000;
+  console.log(gameState.timePerRound)
+  if (gameState.timePerRound === 0) {
+    console.log('done')
+  }
+},1000)

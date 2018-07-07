@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor } from './Actions/game-actions';
+import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor, setRound } from './Actions/game-actions';
 
 const socket = io('http://localhost:5000');
 
@@ -13,8 +13,8 @@ socket.on('waiting', function(bool) {
 })
 
 socket.on('startRound', function(term) {
-    console.log(term);
-    store.dispatch(setIsWaiting(false));
+    const roundInfo = JSON.parse(term);
+    store.dispatch(setRound(roundInfo.keyword.word, roundInfo.roundNumber, true))
 })
 
 socket.on('takenNames', data => {

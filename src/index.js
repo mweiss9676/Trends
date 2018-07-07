@@ -7,10 +7,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware } from './websocket';
-import { takenNamesReducer, lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, gameKeywordReducer, isCaptainReducer, isWaitingReducer, teamNameColorReducer } from './Reducers/game-reducer';
+import { setRoundReducer, takenNamesReducer, lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, gameKeywordReducer, isCaptainReducer, isWaitingReducer, teamNameColorReducer } from './Reducers/game-reducer';
 
 
 const allReducers = combineReducers({
+    roundInfo: setRoundReducer,
     timePerRound: lengthOfGameReducer,
     numberRounds: numberOfRoundsReducer,
     currentTerm: currentTermReducer,
@@ -24,9 +25,16 @@ const allReducers = combineReducers({
     takenNames: takenNamesReducer
 })
 
+const defaultState = {
+    roundInfo: {
+        roundActive: false
+    }
+}
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
     allReducers,
+    defaultState,
     composeEnhancers(applyMiddleware(confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware))
 );
 

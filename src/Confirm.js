@@ -74,12 +74,7 @@ class Confirm extends React.Component {
 
                             this.props.confirmSettings()
                         } else {
-                            // return (
-                            //     <div className="warningBox2">
-                            //         <h1 className="warningText">Time per round should be like: '1 minute' or '35 sec'</h1>
-                            //     </div>
-                            // )
-                            alert("time per round should be like: '1 minute' or '35 sec'")
+                            alert("time per round example: 1 minute 20 seconds")
                         }
 
                     } }>Looks good!</button>

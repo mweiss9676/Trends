@@ -10,6 +10,7 @@ export const IS_WAITING = 'IS_WAITING';
 export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 export const RESTRICTED_NAME = 'RESTRICTED_NAME';
 export const TEAM_NAME_COLOR = 'TEAM_NAME_COLOR';
+export const ROUND_INFO = 'ROUND_INFO';
 
 
 export function setNumberRounds(numberRounds){
@@ -121,6 +122,17 @@ export function setTakenName(takenColor, takenName) {
                 takenName: takenName,
                 takenColor: takenColor
             }
+        }
+    }
+}
+
+export function setRound(keyword, roundNumber, roundActive) {
+    return {
+        type: ROUND_INFO,
+        payload: {
+            keyword: keyword,
+            roundNumber: roundNumber,
+            roundActive: roundActive
         }
     }
 }

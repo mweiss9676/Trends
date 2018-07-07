@@ -15,7 +15,6 @@
 /********************** END  VARIABLES ********************/
 
 /************************* COLORS ***********************/
-/* const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'yellow', 'purple', 'red'] */
 .blue{
   background-color: blue;
 }
@@ -38,7 +37,7 @@
   background-color: teal;
 }
 .yellow{
-  background-color: yellow;
+  background-color: rgba(252, 214, 0, 0.911);
 }
 .purple{
   background-color: purple;
@@ -46,14 +45,32 @@
 .red{
   background-color: red;
 }
-
-
 /********************** END  COLORS ********************/
+
+/********************** ANIMATIONS*************************/
+
+@keyframes round {
+  0% { left: -100%; top: 50%; transform: translateY(-50%); }
+  30% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  35% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  40% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  45% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  50% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  55% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  60% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  65% { top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  100% { left: 150%; top: 50%; transform: translateY(-50%); }
+}
+
+/********************** END ANIMATIONS ********************/
+
+
 
 .app {
   width: 100vw;
   height: 100vh;
   background-color: var(--mainColor);
+  overflow: hidden;
 
 
   display: grid;
@@ -122,6 +139,13 @@ input[type=number]::-webkit-outer-spin-button {
 .teamComponent {
   width: 25vh;
   height: 25vh;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
 }
 
 .title {
@@ -215,3 +239,24 @@ input[type=number]::-webkit-outer-spin-button {
  #highZ {
    z-index: 200;
  }
+
+ /********************* ROUND **********************/
+
+ .round {
+  position: relative;
+  width: 60vw;
+  height: 60vh;
+  background-color: white;
+  box-shadow: 0 5px 20px -10px var(--shadow);
+  z-index: 200;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  animation: round;
+  animation-duration: 5000ms;
+  animation-fill-mode: forwards;
+ }
+ /********************* END ROUND ******************/
