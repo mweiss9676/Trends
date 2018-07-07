@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setLengthRounds, confirmSettings } from './Actions/game-actions';
+import { setLengthRounds, confirmSettings, setNumberRounds, setGameKeyword, setNumberTeams } from './Actions/game-actions';
 import TeamName from './TeamName'
 
 class Confirm extends React.Component {
@@ -13,6 +13,7 @@ class Confirm extends React.Component {
         }
 
         this.parseTime = this.parseTime.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     parseTime = time => {
@@ -31,24 +32,55 @@ class Confirm extends React.Component {
         return result;
     }
 
+    handleChange(action, event) {
+        switch(action) {
+            case 'TIME': 
+                return this.props.onSetLengthRounds(event.target.value)
+            case 'KEYWORD':
+                return this.props.onSetKeyword(event.target.value)
+            case 'ROUNDS':
+                return this.props.onSetNumberRounds(event.target.value)
+            case 'TEAMS':
+                return this.props.onSetNumberTeams(event.target.value)
+            default: 
+                return
+        }
+    }
+
     render() {
         if (this.state.showForm === true) {
             return (
                 <div className="setupInterior">
-                    <h1 contentEditable="true">Topic Term: { this.props.gameKeyword }</h1>
-                    <h1 contentEditable="true">Number of rounds: { this.props.numberRounds }</h1>
-                    <h1 contentEditable="true">Length of rounds: { this.props.timePerRound }</h1>
-                    <h1 contentEditable="true">Number of teams: { this.props.numberTeams }</h1>
+                    <h1>Game Keyword:<input size='4' name='keyword' value={ this.props.gameKeyword } onChange={ event => { this.handleChange('KEYWORD', event)}}></input></h1>
+                    <h1>Number of rounds:<input size='4' name='rounds' value={ this.props.numberRounds } onChange={ event => { this.handleChange('ROUNDS', event)}}></input></h1>
+                    <h1>Time per round:<input size='4' name='time' value={ this.props.timePerRound } onChange={ event => { this.handleChange('TIME', event)}}></input></h1>
+                    <h1>Number of teams:<input size='4' name='time' value={ this.props.numberTeams } onChange={ event => { this.handleChange('TEAMS', event)}}></input></h1>
+
                     <button onClick={ () => {
-                        //parse the time here
-                        const parsed = this.parseTime(this.props.timePerRound);
-                        this.props.onSetLengthRounds(parsed);
 
-                        this.setState({
-                            showForm: false
-                        });
+                        const minutesSeconds = /(minutes|minute|min|seconds|second|sec)/
+                        
+                        console.log(minutesSeconds.test(this.props.timePerRound))
+                        console.log('timer per round is' + this.props.timePerRound)
+                        if(minutesSeconds.test(this.props.timePerRound.toLowerCase())){
 
-                        this.props.confirmSettings()
+                            const parsed = this.parseTime(this.props.timePerRound);
+
+                            this.props.onSetLengthRounds(parsed);
+
+                            this.setState({
+                                showForm: false
+                            });
+
+                            this.props.confirmSettings()
+                        } else {
+                            // return (
+                            //     <div className="warningBox2">
+                            //         <h1 className="warningText">Time per round should be like: '1 minute' or '35 sec'</h1>
+                            //     </div>
+                            // )
+                            alert("time per round should be like: '1 minute' or '35 sec'")
+                        }
 
                     } }>Looks good!</button>
                 </div>
@@ -72,7 +104,10 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = {
     onSetLengthRounds: setLengthRounds,
-    confirmSettings: confirmSettings
+    confirmSettings: confirmSettings, 
+    onSetNumberRounds: setNumberRounds,
+    onSetKeyword: setGameKeyword,
+    onSetNumberTeams: setNumberTeams
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(Confirm);
