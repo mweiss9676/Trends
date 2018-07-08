@@ -2,6 +2,7 @@ var fetch = require('node-fetch');
 var express = require('express');
 var socket = require('socket.io');
 const R = require('rambda');
+const googleTrends = require('google-trends-api');
 
 var app = express();
 var server = app.listen(5000, function() {
@@ -126,11 +127,16 @@ io.on('connection', function(socket){
   })
 
   socket.on('answer', function(answer) {
-    const team = gameState.teams.filter(team => team.socketID === socket.id);
+
+    console.log(`the answer is ${answer.answer}`)
+    const team = gameState.teams.find(team => team.socketID === socket.id)
+
     team.answer.roundNumber = gameState.currentRound;
     team.answer.word = answer;
 
-    //fetch api data here
+    googleTrends.interestOverTime({ keyword: answer.answer })
+    .then(data => socket.emit('trendsResults', data))
+    .catch(err => console.log(err))
   })
 })
 

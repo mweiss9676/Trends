@@ -26,6 +26,12 @@ socket.on('gameKeyword', keyword => {
     store.dispatch(setGameKeyword(gameKeyword))
 })
 
+socket.on('trendsResults', trendsInfo => {
+
+    const info = JSON.parse(trendsInfo)
+    console.log(`the trends info is ${info.default.timelineData[0].time}`)
+})
+
 socket.on('takenNames', data => {
     const teamColor = JSON.parse(data)
 
@@ -60,6 +66,15 @@ export const captainMiddleware = store => next => action => {
 export const teamNamesMiddleware = store => next => action => {
     if (action.type === 'TEAM_NAME') {
         socket.emit('teamName', action.payload)
+    }
+
+    next(action)
+}
+
+export const answerMiddleware = store => next => action => {
+    if (action.type === 'ANSWER') {
+        console.log(`the answer we're sending over looks like: ${JSON.stringify(action.payload)}`)
+        socket.emit('answer', action.payload)
     }
 
     next(action)

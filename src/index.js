@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware } from './websocket';
+import { answerMiddleware, confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware } from './websocket';
 import { setAnswerReducer, setRoundReducer, takenNamesReducer, lengthOfGameReducer, numberOfRoundsReducer, currentTermReducer, trendsInfoReducer, teamTotalsReducer, numberOfTeamsReducer, gameKeywordReducer, isCaptainReducer, isWaitingReducer, teamNameColorReducer } from './Reducers/game-reducer';
 
 
@@ -36,7 +36,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
     allReducers,
     defaultState,
-    composeEnhancers(applyMiddleware(confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware))
+    composeEnhancers(applyMiddleware(confirmGameSettingsMiddleware, captainMiddleware, teamNamesMiddleware, answerMiddleware))
 );
 
 ReactDOM.render(

@@ -35,7 +35,7 @@ class Searchbar extends React.Component{
     render(){
         return(
             <div>
-                <form onSubmit={ this.handleSubmit }>
+                <form onSubmit={ this.handleSubmit } id="searchForm">
                     <input 
                         autoFocus={ true } 
                         disabled={ !this.props.roundActive } 

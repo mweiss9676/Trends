@@ -45,6 +45,7 @@ class Clock extends React.Component {
 
             if(this.state.timeLeft <= 0) {
                 clearInterval(time);
+                document.getElementById('searchForm').submit();
             }
         }, 1000);
     }
