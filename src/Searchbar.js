@@ -15,7 +15,7 @@ class Searchbar extends React.Component{
     render(){
         return(
             <div>
-                <input type="text" className="searchbar" placeholder={ this.state.currentTerm }></input>
+                <input  autoFocus={ true } disabled={ !this.props.roundActive } type="text" className="searchbar" placeholder={ this.props.keyword }></input>
                 <img id="searchIcon" src={ search } alt="search icon"/>
             </div>
         )
@@ -23,7 +23,8 @@ class Searchbar extends React.Component{
 }
 
 const mapStateToProps = state => ({
-    currentTerm: state.currentTerm
+    keyword: state.gameKeyword,
+    roundActive: state.roundInfo.roundActive
 });
 
 const mapActionsToProps = {

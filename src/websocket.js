@@ -1,20 +1,29 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor, setRound } from './Actions/game-actions';
+import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor, setRound, setGameKeyword } from './Actions/game-actions';
 
 const socket = io('http://localhost:5000');
 
-socket.on('isCaptain', function(bool) {
+socket.on('isCaptain', bool => {
     store.dispatch(setIsCaptain(bool))
 })
 
-socket.on('waiting', function(bool) {
+socket.on('waiting', bool => {
     store.dispatch(setIsWaiting(bool))
 })
 
-socket.on('startRound', function(term) {
+socket.on('startRound', term => {
     const roundInfo = JSON.parse(term);
     store.dispatch(setRound(roundInfo.keyword.word, roundInfo.roundNumber, true))
+})
+
+socket.on('roundActive', bool => {
+    store.dispatch(setRound(null, null, bool))
+})
+
+socket.on('gameKeyword', keyword => {
+    const gameKeyword = JSON.parse(keyword);
+    store.dispatch(setGameKeyword(gameKeyword))
 })
 
 socket.on('takenNames', data => {

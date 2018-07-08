@@ -57,7 +57,6 @@ class Confirm extends React.Component {
                     <h1>Number of teams:<input size='4' name='time' value={ this.props.numberTeams } onChange={ event => { this.handleChange('TEAMS', event)}}></input></h1>
 
                     <button onClick={ () => {
-
                         const minutesSeconds = /(minutes|minute|min|seconds|second|sec)/
                         
                         console.log(minutesSeconds.test(this.props.timePerRound))
@@ -74,7 +73,7 @@ class Confirm extends React.Component {
 
                             this.props.confirmSettings()
                         } else {
-                            alert("time per round example: 1 minute 20 seconds")
+                            alert("Error 'Time Per Round' Ex. '1 minute 20 seconds'")
                         }
 
                     } }>Looks good!</button>

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Clubhouse, { TopPart } from './Clubhouse.js';
+import Clubhouse from './Clubhouse.js';
+import TopPart from './TopPart';
 import { connect } from 'react-redux';
-import Form from './Form';
 import Setup from './Setup';
 import Round from './Round';
 

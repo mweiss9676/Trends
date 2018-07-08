@@ -47,6 +47,7 @@ io.on('connection', function(socket){
     socket.emit('waiting', true);
   } else if (state.captain === socket.id) {
     socket.emit('isCaptain', true);
+    socket.emit('waiting', false);
   }
 
   socket.on('teamName', function(teamName) {
@@ -59,8 +60,18 @@ io.on('connection', function(socket){
     io.emit('takenNames', JSON.stringify(data))
 
     if(gameState.teams.length == gameState.numberTeams) {
-      startTimer();
       runGame();
+      const timer = setInterval(() => {
+        gameState.timePerRound -= 1000;
+        console.log(gameState.timePerRound);
+      
+        if(gameState.timePerRound <= 0) {
+
+          io.emit('roundActive', false); //SEND END ROUND 
+
+          clearInterval(timer);
+        }
+      }, 1000)
     }
   })
 
@@ -68,11 +79,12 @@ io.on('connection', function(socket){
     
     const data = JSON.parse(store);
 
-    gameState.timePerRound = data.timePerRound;
+    gameState.timePerRound = data.timePerRound + 2000;
     gameState.numberRounds = data.numberRounds;
     gameState.currentTerm = data.gameKeyword;
     gameState.numberTeams = data.numberTeams;
 
+    io.emit('gameKeyword', JSON.stringify(gameState.currentTerm))
 
     let term = gameState.currentTerm;
     let datamuseURL;
@@ -101,10 +113,8 @@ const runGame = () => {
   io.emit('startRound', JSON.stringify(round));
 }
 
-const startTimer = () => setInterval(function(){
-  gameState.timePerRound -= 1000;
-  console.log(gameState.timePerRound)
-  if (gameState.timePerRound === 0) {
-    console.log('done')
-  }
-},1000)
+
+
+
+
+

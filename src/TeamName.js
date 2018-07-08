@@ -10,7 +10,7 @@ class TeamName extends React.Component {
             isTeamNameEntered: false,
             teamNameText: '', 
             allowSubmit: true,
-            warningBox: false
+            warningBox: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,6 +21,7 @@ class TeamName extends React.Component {
 
     handleChange(event) {
     
+        console.log(this.regex)
         this.setState({
             teamNameText: event.target.value
         });
@@ -69,10 +70,14 @@ class TeamName extends React.Component {
                         <div className="setupInterior">
                             <h1 className="question">What is your team name?</h1>
                             <input 
+                                autoFocus={ true }
+                                required={ true }
                                 className="setupInput"
                                 type="text" 
                                 name="teamName"
                                 placeholder="...Blue Baracudas"
+                                pattern={"^(" + this.props.gameKeyword + "\\s\\S+|\\S+\\s" + this.props.gameKeyword + ")$"}
+                                title={"Your Team Name must contain the game's keyword '" + this.props.gameKeyword + "'" }
                                 value={ this.state.teamNameText }
                                 onChange={ this.handleChange }
                                 >
@@ -94,7 +99,8 @@ class TeamName extends React.Component {
 
 const mapStateToProps = state => ({
     teamName: state.teamNameColor,
-    takenNames: state.takenNames
+    takenNames: state.takenNames,
+    gameKeyword: state.gameKeyword
 })
 
 export default connect(mapStateToProps)(TeamName);
