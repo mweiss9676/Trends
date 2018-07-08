@@ -18,7 +18,20 @@ const gameState = {
   numberTeams: -1,
   topicTerm: null,
   roundKeywords: [], 
-  teams: []
+  teams: [], 
+  currentRound: null
+}
+
+function Team() {
+  this.socketID = null,
+  this.name = null,
+  this.roundScore = null,
+  this.totalScore = null,
+  this.color = null,
+  this.answer = {
+    roundNumber: null,
+    word: null
+  }
 }
 
 const state = {
@@ -42,6 +55,7 @@ io.on('connection', function(socket){
     }
   }) 
 
+
   if (state.captain !== null && socket.id !== state.captain) {
     socket.emit('isCaptain', false);
     socket.emit('waiting', true);
@@ -50,14 +64,21 @@ io.on('connection', function(socket){
     socket.emit('waiting', false);
   }
 
+
+
   socket.on('teamName', function(teamName) {
-    gameState.teams.push(teamName);
+
+    const team = new Team();
+    team.name = teamName;
 
     const color = colors.splice(Math.floor(Math.random() * colors.length), 1);
-    const data = [ color, teamName ];
+    team.color = color;
 
-    socket.emit('teamData', JSON.stringify(data))
-    io.emit('takenNames', JSON.stringify(data))
+    team.socketID = socket.id;
+
+    gameState.teams.push(team);
+    socket.emit('teamData', JSON.stringify(team))
+    io.emit('takenNames', JSON.stringify(team))
 
     if(gameState.teams.length == gameState.numberTeams) {
       runGame();
@@ -103,12 +124,23 @@ io.on('connection', function(socket){
       .then(() => io.emit('waiting', false))
       .catch(err => console.log(err));    
   })
+
+  socket.on('answer', function(answer) {
+    const team = gameState.teams.filter(team => team.socketID === socket.id);
+    team.answer.roundNumber = gameState.currentRound;
+    team.answer.word = answer;
+
+    //fetch api data here
+  })
 })
 
 const runGame = () => {
+
+  gameState.currentRound = R.range(1, (gameState.numberRounds + 1)).shift();
+
   const round = {
     keyword: gameState.roundKeywords.pop(),
-    roundNumber: R.range(1, (gameState.numberRounds + 1)).shift()
+    roundNumber: gameState.currentRound
   }
   io.emit('startRound', JSON.stringify(round));
 }

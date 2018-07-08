@@ -28,12 +28,17 @@ socket.on('gameKeyword', keyword => {
 
 socket.on('takenNames', data => {
     const teamColor = JSON.parse(data)
-    store.dispatch(setTakenName(teamColor[0][0], teamColor[1]))
+
+    console.log(` teamcolor in takenNames is ${teamColor.name}`)
+
+    store.dispatch(setTakenName(teamColor.color, teamColor.name))
 })
 
 socket.on('teamData', data => {
     const teamColor = JSON.parse(data)
-    store.dispatch(setTeamNameColor(teamColor[0][0], teamColor[1]))
+
+    console.log(` teamcolor in teamData is ${teamColor}`)
+    store.dispatch(setTeamNameColor(teamColor.color, teamColor.name))
 })
 
 export const confirmGameSettingsMiddleware = store => next => action => {

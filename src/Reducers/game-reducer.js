@@ -1,4 +1,4 @@
-import { ROUND_INFO, RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING, TEAM_NAME_COLOR } from '../Actions/game-actions';
+import { ANSWER, ROUND_INFO, RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING, TEAM_NAME_COLOR } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -114,6 +114,17 @@ export function setRoundReducer (state = {}, { type, payload }) {
                 keyword: payload.keyword,
                 roundNumber: payload.roundNumber,
                 roundActive: payload.roundActive
+            }
+        default: 
+            return state
+    }
+}
+
+export function setAnswerReducer (state = '', { type, payload }) {
+    switch(type) {
+        case ANSWER: 
+            return {
+                answer: payload.answer
             }
         default: 
             return state

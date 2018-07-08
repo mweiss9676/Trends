@@ -11,6 +11,7 @@ export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 export const RESTRICTED_NAME = 'RESTRICTED_NAME';
 export const TEAM_NAME_COLOR = 'TEAM_NAME_COLOR';
 export const ROUND_INFO = 'ROUND_INFO';
+export const ANSWER = 'ANSWER';
 
 
 export function setNumberRounds(numberRounds){
@@ -133,6 +134,15 @@ export function setRound(keyword, roundNumber, roundActive) {
             keyword: keyword,
             roundNumber: roundNumber,
             roundActive: roundActive
+        }
+    }
+}
+
+export function setAnswer(answer) {
+    return {
+        type: ANSWER,
+        payload: {
+            answer: answer
         }
     }
 }
