@@ -66,7 +66,7 @@ export function otherTeamsInfoReducer(state = initialState, { type, payload }) {
             } else {
                 state.map(
                     teamObj => {
-                        console.log(`the teamObj is being mapped it is: ${teamObj.name}`)
+                        console.log(`teamObj.answer is ${teamObj.answer} answer.word is ${teamObj.answer.word}, and answer.roundNumber is ${teamObj.answer.roundNumber}`)
                         return 
                         teamObj.socketID === payload.socketID ? 
                         [

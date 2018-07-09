@@ -6,9 +6,9 @@ import { setOtherTeamInfo } from './Actions/team-actions';
 
 const socket = io('http://localhost:5000');
 
-socket.on('ping', function(data){
-    socket.emit('pong', {beat: 1});
-});
+socket.on('disconnect', data => {
+    console.log(`${socket.id} has disconnected and the info is ${data}`)
+})
 
 socket.on('isCaptain', bool => {
     store.dispatch(setIsCaptain(bool))

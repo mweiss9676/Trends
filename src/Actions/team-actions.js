@@ -58,6 +58,8 @@ export function setTeamAnswer(word, roundNumber) {
 
 
 export function setOtherTeamInfo(socketID, name, color, roundScore, totalScore, word, roundNumber) {
+    console.log(`word is ${word}, and roundNumber is ${roundNumber}`)
+
     return {
         type: OTHER_TEAM_INFO,
         payload: {
