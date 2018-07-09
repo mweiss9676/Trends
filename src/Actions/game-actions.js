@@ -9,7 +9,6 @@ export const IS_CAPTAIN = 'IS_CAPTAIN';
 export const IS_WAITING = 'IS_WAITING';
 export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 export const RESTRICTED_NAME = 'RESTRICTED_NAME';
-export const TEAM_NAME_COLOR = 'TEAM_NAME_COLOR';
 export const ROUND_INFO = 'ROUND_INFO';
 export const ANSWER = 'ANSWER';
 
@@ -58,16 +57,6 @@ export function setGameKeyword(gameKeyword) {
             payload: {
                 gameKeyword: gameKeyword
             }
-        }
-    }
-}
-
-export function setTeamNameColor(color, teamName) {
-    return {
-        type: TEAM_NAME_COLOR,
-        payload: {
-            color: color,
-            teamName: teamName
         }
     }
 }

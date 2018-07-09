@@ -26,7 +26,9 @@ class TeamName extends React.Component {
             teamNameText: event.target.value
         });
 
-        let restrictedNames = this.props.takenNames.map(name => name.name.toUpperCase())
+        this.props.otherTeamsInfo.map(team => console.log(`team is ${team}, and team.name is ${team.name}`))
+
+        let restrictedNames = this.props.otherTeamsInfo.map(teamObj => teamObj.name.toUpperCase())
 
         let nameIsTaken = restrictedNames.includes(event.target.value.toUpperCase())
 
@@ -52,7 +54,7 @@ class TeamName extends React.Component {
     
         if(this.state.allowSubmit) {
             this.props.dispatch({
-                type: 'TEAM_NAME',
+                type: 'SEND_NAME',
                 payload: this.state.teamNameText
             });
 
@@ -98,8 +100,8 @@ class TeamName extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    teamName: state.teamNameColor,
-    takenNames: state.takenNames,
+    // takenNames: state.takenNames,
+    otherTeamsInfo: state.otherTeamsInfo,
     gameKeyword: state.gameKeyword
 })
 

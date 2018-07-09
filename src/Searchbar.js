@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import search from './images/search.png';
-import { setAnswer } from './Actions/game-actions';
 
 class Searchbar extends React.Component{
     constructor(props){
@@ -19,7 +18,10 @@ class Searchbar extends React.Component{
     handleSubmit(event) {
         event.preventDefault();
 
-        this.props.onSetAnswer(this.state.currentAnswer);
+        this.props.dispatch({
+            type: 'SEND_ANSWER',
+            payload: this.state.currentAnswer
+        })    
 
         this.setState({
             currentAnswer: ''
@@ -60,8 +62,4 @@ const mapStateToProps = state => ({
     keyword: state.roundInfo.keyword
 });
 
-const mapActionsToProps = {
-    onSetAnswer: setAnswer
-}
-
-export default connect(mapStateToProps, mapActionsToProps)(Searchbar)
+export default connect(mapStateToProps)(Searchbar)

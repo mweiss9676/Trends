@@ -25,7 +25,7 @@ class TopPart extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    takenNames: state.takenNames,
+    // takenNames: state.takenNames,
     teamNameColor: state.teamNameColor,
     roundActive: state.roundInfo.roundActive
 })

@@ -1,4 +1,4 @@
-import { ANSWER, ROUND_INFO, RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING, TEAM_NAME_COLOR } from '../Actions/game-actions';
+import { ROUND_INFO, RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING } from '../Actions/game-actions';
 
 export function lengthOfGameReducer(state = 60000, { type, payload }) {
     switch(type) {
@@ -63,18 +63,6 @@ export function gameKeywordReducer(state = '', { type, payload }) {
     }
 }
 
-export function teamNameColorReducer(state = {}, { type, payload }) {
-    switch(type) {
-        case TEAM_NAME_COLOR: 
-            return {
-                name: payload.teamName, 
-                color: payload.color
-            }
-        default: 
-            return state
-    }
-}
-
 export function isCaptainReducer(state = '', { type, payload }) {
     switch(type) {
         case IS_CAPTAIN: 
@@ -94,19 +82,6 @@ export function isWaitingReducer(state = '', { type, payload }) {
 }
 
 
-let initialState = [];
-export function takenNamesReducer (state = initialState, { type, payload }) {
-    switch(type) {
-        case RESTRICTED_NAME:
-            return [ ...state, { 
-                name: payload.takenName,
-                color: payload.takenColor
-            } ]
-        default: 
-            return state
-    }
-}
-
 export function setRoundReducer (state = {}, { type, payload }) {
     switch(type) {
         case ROUND_INFO: 
@@ -120,13 +95,13 @@ export function setRoundReducer (state = {}, { type, payload }) {
     }
 }
 
-export function setAnswerReducer (state = '', { type, payload }) {
-    switch(type) {
-        case ANSWER: 
-            return {
-                answer: payload.answer
-            }
-        default: 
-            return state
-    }
-}
+// export function setAnswerReducer (state = '', { type, payload }) {
+//     switch(type) {
+//         case ANSWER: 
+//             return {
+//                 answer: payload.answer
+//             }
+//         default: 
+//             return state
+//     }
+// }

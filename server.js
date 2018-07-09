@@ -5,7 +5,7 @@ const R = require('rambda');
 const googleTrends = require('google-trends-api');
 
 var app = express();
-var server = app.listen(5000, function() {
+var server = app.listen(5000, function() {`npm `
   console.log('listening to port 5000');
 });
 
@@ -20,7 +20,7 @@ const gameState = {
   topicTerm: null,
   roundKeywords: [], 
   teams: [], 
-  currentRound: null
+  currentRound: null, 
 }
 
 function Team() {
@@ -43,7 +43,15 @@ const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'ye
 
 io.on('connection', function(socket){
 
+  socket.on('pong', function(data){
+    console.log("Pong received from client");
+  });
+
   console.log(`${socket.id} connected`)
+
+  socket.on('disconnect', function() {
+    console.log(`${socket.id} has disconnected`)
+  })
 
   socket.on('setCaptain', id => {
     if(state.captain === null) {
@@ -67,6 +75,7 @@ io.on('connection', function(socket){
 
 
 
+
   socket.on('teamName', function(teamName) {
 
     const team = new Team();
@@ -78,8 +87,7 @@ io.on('connection', function(socket){
     team.socketID = socket.id;
 
     gameState.teams.push(team);
-    socket.emit('teamData', JSON.stringify(team))
-    io.emit('takenNames', JSON.stringify(team))
+    emitUpdateTeamsInfo(socket, team);
 
     if(gameState.teams.length == gameState.numberTeams) {
       runGame();
@@ -128,13 +136,15 @@ io.on('connection', function(socket){
 
   socket.on('answer', function(answer) {
 
-    console.log(`the answer is ${answer.answer}`)
+    console.log(`the answer is ${answer}`)
     const team = gameState.teams.find(team => team.socketID === socket.id)
 
     team.answer.roundNumber = gameState.currentRound;
     team.answer.word = answer;
 
-    googleTrends.interestOverTime({ keyword: answer.answer })
+    emitUpdateTeamsInfo(socket, team);
+
+    googleTrends.interestOverTime({ keyword: answer })
     .then(data => socket.emit('trendsResults', data))
     .catch(err => console.log(err))
   })
@@ -151,6 +161,17 @@ const runGame = () => {
   io.emit('startRound', JSON.stringify(round));
 }
 
+const emitUpdateTeamsInfo = (socket, team) => {
+  socket.emit('teamData', JSON.stringify(team));
+  socket.broadcast.emit('otherTeamsInfo', JSON.stringify(team));
+}
+
+function sendHeartbeat(){
+  setTimeout(sendHeartbeat, 8000);
+  io.sockets.emit('ping', { beat : 1 });
+}
+
+setTimeout(sendHeartbeat, 8000);
 
 
 

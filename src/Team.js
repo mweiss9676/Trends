@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export class TeamComponent extends React.Component {
+class TeamComponent extends React.Component {
     constructor(props){
         super(props)
 
@@ -16,3 +17,8 @@ export class TeamComponent extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+})
+
+export default connect()(TeamComponent);

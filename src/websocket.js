@@ -1,8 +1,14 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName, setTeamNameColor, setRound, setGameKeyword } from './Actions/game-actions';
+import { setIsCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword } from './Actions/game-actions';
+import { setTeamColor, setTeamName, setTeamAnswer, setTeamRoundScore, setTeamTotalScore } from './Actions/team-actions';
+import { setOtherTeamInfo } from './Actions/team-actions';
 
 const socket = io('http://localhost:5000');
+
+socket.on('ping', function(data){
+    socket.emit('pong', {beat: 1});
+});
 
 socket.on('isCaptain', bool => {
     store.dispatch(setIsCaptain(bool))
@@ -29,22 +35,34 @@ socket.on('gameKeyword', keyword => {
 socket.on('trendsResults', trendsInfo => {
 
     const info = JSON.parse(trendsInfo)
-    console.log(`the trends info is ${info.default.timelineData[0].time}`)
+    // console.log(`the trends info is ${info.default.timelineData[info.default.timelineData.length - 1].value}`)
+
 })
 
-socket.on('takenNames', data => {
-    const teamColor = JSON.parse(data)
+socket.on('otherTeamsInfo', data => {
+    const teamData = JSON.parse(data)
 
-    console.log(` teamcolor in takenNames is ${teamColor.name}`)
+    console.log(`otherTeamsInfo: socketID: ${teamData.socketID}, name: ${teamData.name}, color: ${teamData.color}, roundScore: ${teamData.roundScore }, totalScore: ${teamData.totalScore }, word: ${teamData.answer.word}, roundNumber: ${teamData.answer.roundNumber}`)
 
-    store.dispatch(setTakenName(teamColor.color, teamColor.name))
+    //store.dispatch(setTakenName(teamData.color[0], teamData.name))
+    store.dispatch(setOtherTeamInfo(
+        teamData.socketID ? teamData.socketID : null,
+        teamData.name ? teamData.name : null,
+        teamData.color[0] ? teamData.color[0] : null,
+        teamData.roundScore ? teamData.roundScore : null,
+        teamData.totalScore ? teamData.totalScore : null,
+        teamData.answer.word ? teamData.answer.word : null,
+        teamData.answer.roundNumber ? teamData.answer.roundNumber : null,
+    ));
 })
 
 socket.on('teamData', data => {
-    const teamColor = JSON.parse(data)
+    const teamData = JSON.parse(data)
 
-    console.log(` teamcolor in teamData is ${teamColor}`)
-    store.dispatch(setTeamNameColor(teamColor.color, teamColor.name))
+    console.log(` teamData looks like ${teamData}, teamData.color is ${teamData.color}, teamData.name is ${teamData.name} and teamData.answer.word is ${teamData.answer.word} and teamData.answer.roundNumber is ${teamData.answer.roundNumber}`)
+    store.dispatch(setTeamColor(teamData.color[0] ? teamData.color[0]: null))
+    store.dispatch(setTeamName(teamData.name ? teamData.name : null))
+    store.dispatch(setTeamAnswer( (teamData.answer.word ? teamData.answer.word : null), (teamData.answer.roundNumber ? teamData.answer.roundNumber : null) ))
 })
 
 export const confirmGameSettingsMiddleware = store => next => action => {
@@ -64,7 +82,7 @@ export const captainMiddleware = store => next => action => {
 }
 
 export const teamNamesMiddleware = store => next => action => {
-    if (action.type === 'TEAM_NAME') {
+    if (action.type === 'SEND_NAME') {
         socket.emit('teamName', action.payload)
     }
 
@@ -72,11 +90,12 @@ export const teamNamesMiddleware = store => next => action => {
 }
 
 export const answerMiddleware = store => next => action => {
-    if (action.type === 'ANSWER') {
-        console.log(`the answer we're sending over looks like: ${JSON.stringify(action.payload)}`)
+    if (action.type === 'SEND_ANSWER') {
+        // console.log(`the answer we're sending over looks like: ${JSON.stringify(action.payload)}`)
         socket.emit('answer', action.payload)
     }
 
     next(action)
 }
+
 
