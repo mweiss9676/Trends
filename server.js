@@ -24,7 +24,7 @@ const gameState = {
 }
 
 function Team() {
-  this.socketID = null,
+  this.clientId = null,
   this.name = null,
   this.roundScore = null,
   this.totalScore = null,
@@ -43,20 +43,24 @@ const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'ye
 
 io.on('connection', function(socket){
 
-  socket.on('pong', function(data){
-    console.log("Pong received from client");
-  });
+  const team = new Team();
+  team.clientId = guid();
+  socket.emit('id', team.clientId)
+  console.log(`I just sent an id of ${team.clientId} and the socket.id is ${socket.id}`)
 
-  console.log(`${socket.id} connected`)
-
-  socket.on('disconnect', function() {
-    console.log(`${socket.id} has disconnected`)
+  socket.on('whatever', reason => {
+    // console.log(`reconnecting on the server side with incoming clientId = ${clientId} and server side team.clientId = ${team.clientId}`)
+    console.log(`reconnect reason is ${reason}`)
   })
 
-  socket.on('setCaptain', id => {
+  socket.on('disconnect', function(word) {
+    console.log(`${team.clientId} has disconnected and the reason is ${word}`);
+  })
+
+  socket.on('setCaptain', clientId => {
     if(state.captain === null) {
-      state.captain = id;
-      console.log(`captain is socket.id: ${state.captain}`);
+      state.captain = clientId;
+      console.log(`captain is clientId: ${state.captain}`);
 
       socket.broadcast.emit('waiting', true);
       socket.broadcast.emit('isCaptain', false)
@@ -65,10 +69,10 @@ io.on('connection', function(socket){
   }) 
 
 
-  if (state.captain !== null && socket.id !== state.captain) {
+  if (state.captain !== null && team.clientId !== state.captain) {
     socket.emit('isCaptain', false);
     socket.emit('waiting', true);
-  } else if (state.captain === socket.id) {
+  } else if (state.captain === team.clientId) {
     socket.emit('isCaptain', true);
     socket.emit('waiting', false);
   }
@@ -78,13 +82,13 @@ io.on('connection', function(socket){
 
   socket.on('teamName', function(teamName) {
 
-    const team = new Team();
+    // const team = gameState.teams.find(team => team.id === socket.id)
     team.name = teamName;
 
     const color = colors.splice(Math.floor(Math.random() * colors.length), 1);
     team.color = color;
 
-    team.socketID = socket.id;
+    // team.socketID = socket.id;
 
     gameState.teams.push(team);
     emitUpdateTeamsInfo(socket, team);
@@ -110,6 +114,7 @@ io.on('connection', function(socket){
     const data = JSON.parse(store);
 
     gameState.timePerRound = data.timePerRound + 2000;
+    //console.log(`the gameState.timePerRound is ${gameState.timePerRound} and the data passed in is ${data.timePerRound}`)
     gameState.numberRounds = data.numberRounds;
     gameState.currentTerm = data.gameKeyword;
     gameState.numberTeams = data.numberTeams;
@@ -137,7 +142,7 @@ io.on('connection', function(socket){
   socket.on('answer', function(answer) {
 
     console.log(`the answer is ${answer}`)
-    const team = gameState.teams.find(team => team.socketID === socket.id)
+    // const team = gameState.teams.find(team => team.socketID === socket.id)
 
     team.answer.roundNumber = gameState.currentRound;
     team.answer.word = answer;
@@ -156,7 +161,8 @@ const runGame = () => {
 
   const round = {
     keyword: gameState.roundKeywords.pop(),
-    roundNumber: gameState.currentRound
+    roundNumber: gameState.currentRound,
+    timePerRound: gameState.timePerRound
   }
   io.emit('startRound', JSON.stringify(round));
 }
@@ -166,12 +172,16 @@ const emitUpdateTeamsInfo = (socket, team) => {
   socket.broadcast.emit('otherTeamsInfo', JSON.stringify(team));
 }
 
-function sendHeartbeat(){
-  setTimeout(sendHeartbeat, 8000);
-  io.sockets.emit('ping', { beat : 1 });
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
-setTimeout(sendHeartbeat, 8000);
+
 
 
 

@@ -1,13 +1,24 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword } from './Actions/game-actions';
-import { setTeamColor, setTeamName, setTeamAnswer, setTeamRoundScore, setTeamTotalScore } from './Actions/team-actions';
+import { setIsCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword, setLengthRounds } from './Actions/game-actions';
+import { setTeamId, setTeamColor, setTeamName, setTeamAnswer, setTeamRoundScore, setTeamTotalScore } from './Actions/team-actions';
 import { setOtherTeamInfo } from './Actions/team-actions';
 
 const socket = io('http://localhost:5000');
+const client = {
+    id: null
+}
 
-socket.on('disconnect', data => {
-    console.log(`${socket.id} has disconnected and the info is ${data}`)
+socket.on('id', id => {
+    console.log(`my unique id is ${id}`);
+    client.id = id;
+})
+
+socket.on('disconnect', function (reason){
+    alert(`this piece of shit is failing because ${reason}`)
+    setTimeout(() => {
+        socket.emit('whatever', client.id)
+    }, 2000)
 })
 
 socket.on('isCaptain', bool => {
@@ -20,7 +31,9 @@ socket.on('waiting', bool => {
 
 socket.on('startRound', term => {
     const roundInfo = JSON.parse(term);
-    store.dispatch(setRound(roundInfo.keyword.word, roundInfo.roundNumber, true))
+    store.dispatch(setRound(roundInfo.keyword.word, roundInfo.roundNumber, true));
+    console.log(`timePerRound here is ${roundInfo.timePerRound}`)
+    store.dispatch(setLengthRounds(roundInfo.timePerRound));
 })
 
 socket.on('roundActive', bool => {
@@ -42,11 +55,11 @@ socket.on('trendsResults', trendsInfo => {
 socket.on('otherTeamsInfo', data => {
     const teamData = JSON.parse(data)
 
-    console.log(`otherTeamsInfo: socketID: ${teamData.socketID}, name: ${teamData.name}, color: ${teamData.color}, roundScore: ${teamData.roundScore }, totalScore: ${teamData.totalScore }, word: ${teamData.answer.word}, roundNumber: ${teamData.answer.roundNumber}`)
+    console.log(`otherTeamsInfo: clientId: ${teamData.clientId}, name: ${teamData.name}, color: ${teamData.color}, roundScore: ${teamData.roundScore }, totalScore: ${teamData.totalScore }, word: ${teamData.answer.word}, roundNumber: ${teamData.answer.roundNumber}`)
 
     //store.dispatch(setTakenName(teamData.color[0], teamData.name))
     store.dispatch(setOtherTeamInfo(
-        teamData.socketID ? teamData.socketID : null,
+        teamData.clientId ? teamData.clientId : null,
         teamData.name ? teamData.name : null,
         teamData.color[0] ? teamData.color[0] : null,
         teamData.roundScore ? teamData.roundScore : null,
@@ -75,7 +88,7 @@ export const confirmGameSettingsMiddleware = store => next => action => {
 
 export const captainMiddleware = store => next => action => {
     if(action.type === 'SET_CAPTAIN') {
-        socket.emit('setCaptain', socket.id)
+        socket.emit('setCaptain', client.id)
     }
 
     next(action)

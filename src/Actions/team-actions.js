@@ -3,9 +3,18 @@ export const TEAM_NAME = 'TEAM_NAME';
 export const TEAM_ROUND_SCORE = 'TEAM_ROUND_SCORE';
 export const TEAM_TOTAL_SCORE = 'TEAM_TOTAL_SCORE';
 export const TEAM_ANSWER = 'TEAM_ANSWER';
+// export const TEAM_ID = 'TEAM_ID';
 
 export const OTHER_TEAM_INFO = 'OTHER_TEAM_INFO';
 
+// export function setTeamId(id) {
+//     return {
+//         type: TEAM_ID,
+//         payload: {
+//             id: id
+//         }
+//     }
+// }
 
 export function setTeamColor(color) {
     return {
@@ -57,13 +66,13 @@ export function setTeamAnswer(word, roundNumber) {
 /************************************OTHER TEAMS **************************************/
 
 
-export function setOtherTeamInfo(socketID, name, color, roundScore, totalScore, word, roundNumber) {
+export function setOtherTeamInfo(clientId, name, color, roundScore, totalScore, word, roundNumber) {
     console.log(`word is ${word}, and roundNumber is ${roundNumber}`)
 
     return {
         type: OTHER_TEAM_INFO,
         payload: {
-            socketID: socketID,
+            clientId: clientId,
             teamName: name,
             color: color,
             roundScore: roundScore,

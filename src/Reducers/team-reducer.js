@@ -4,6 +4,11 @@ import { OTHER_TEAM_INFO } from '../Actions/team-actions';
 
 export function teamInfoReducer(state = {}, { type, payload }) {
     switch(type) {
+        // case TEAM_ID: 
+        //     return {
+        //         ...state,
+        //         id: payload.id
+        //     }
         case TEAM_NAME: 
             return {
                 ...state,
@@ -44,7 +49,6 @@ Otherwise, if I don't have it I should add it to my collection */
 
 let initialState = [];
 export function otherTeamsInfoReducer(state = initialState, { type, payload }) {
-    console.log(`the payload is ${payload} and the type is ${type}`)
     switch(type) {
         case OTHER_TEAM_INFO: 
             const team = state.find(teamObj => teamObj.socketID === payload.socketID);
@@ -52,7 +56,7 @@ export function otherTeamsInfoReducer(state = initialState, { type, payload }) {
                 return [
                      ...state,
                      {
-                        socketID: payload.socketID,
+                        clientId: payload.clientId,
                         name: payload.teamName,
                         color: payload.color,
                         roundScore: payload.roundScore,
@@ -68,7 +72,7 @@ export function otherTeamsInfoReducer(state = initialState, { type, payload }) {
                     teamObj => {
                         console.log(`teamObj.answer is ${teamObj.answer} answer.word is ${teamObj.answer.word}, and answer.roundNumber is ${teamObj.answer.roundNumber}`)
                         return 
-                        teamObj.socketID === payload.socketID ? 
+                        teamObj.clientId === payload.clientId ? 
                         [
                             Object.assign({}, teamObj, {
                                 name: payload.teamName,

@@ -1,6 +1,6 @@
 import { ROUND_INFO, RESTRICTED_NAME, CURRENT_TERM, LENGTH_ROUNDS, NUMBER_ROUNDS, TRENDS_INFO, TEAM_TOTALS, NUMBER_TEAMS, GAME_KEYWORD, IS_CAPTAIN, IS_WAITING } from '../Actions/game-actions';
 
-export function lengthOfGameReducer(state = 60000, { type, payload }) {
+export function lengthOfGameReducer(state = {}, { type, payload }) {
     switch(type) {
         case LENGTH_ROUNDS: 
             return payload.lengthRounds;
