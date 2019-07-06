@@ -4,11 +4,14 @@ var socket = require('socket.io');
 const R = require('rambda');
 const googleTrends = require('google-trends-api');
 
+// var app = express();
+// var server = app.listen(3000);
+
+// const io = socket(server);
 var app = express();
-var server = app.listen(3000);
-
-const io = socket(server);
-
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+server.listen(5000);
 
 const gameState = {
   timePerRound: null,
