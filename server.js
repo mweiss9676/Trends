@@ -5,9 +5,7 @@ const R = require('rambda');
 const googleTrends = require('google-trends-api');
 
 var app = express();
-var server = app.listen(5000, function() {`npm `
-  console.log('listening to port 5000');
-});
+var server = app.listen(3000);
 
 const io = socket(server);
 

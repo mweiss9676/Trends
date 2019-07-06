@@ -4,7 +4,7 @@ import { setIsCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword, set
 import { setTeamId, setTeamColor, setTeamName, setTeamAnswer, setTeamRoundScore, setTeamTotalScore } from './Actions/team-actions';
 import { setOtherTeamInfo } from './Actions/team-actions';
 
-const socket = io('http://localhost:5000');
+const socket = io();
 const client = {
     id: null
 }
