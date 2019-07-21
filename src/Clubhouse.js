@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TeamComponent from './Team.js';
-import './App.css';
+import './styles/App.css';
 
 
 class Clubhouse extends React.Component {

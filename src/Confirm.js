@@ -51,16 +51,14 @@ class Confirm extends React.Component {
         if (this.state.showForm === true) {
             return (
                 <div className="setupInterior">
-                    <h1>Game Keyword:<input size='4' name='keyword' value={ this.props.gameKeyword } onChange={ event => { this.handleChange('KEYWORD', event)}}></input></h1>
-                    <h1>Number of rounds:<input size='4' name='rounds' value={ this.props.numberRounds } onChange={ event => { this.handleChange('ROUNDS', event)}}></input></h1>
-                    <h1>Time per round:<input size='4' name='time' value={ this.props.timePerRound } onChange={ event => { this.handleChange('TIME', event)}}></input></h1>
-                    <h1>Number of teams:<input size='4' name='time' value={ this.props.numberTeams } onChange={ event => { this.handleChange('TEAMS', event)}}></input></h1>
+                    <h5>Game Keyword:<input size='4' name='keyword' value={ this.props.gameKeyword } onChange={ event => { this.handleChange('KEYWORD', event)}}></input></h5>
+                    <h5>Number of rounds:<input size='4' name='rounds' value={ this.props.numberRounds } onChange={ event => { this.handleChange('ROUNDS', event)}}></input></h5>
+                    <h5>Time per round:<input size='4' name='time' value={ this.props.timePerRound } onChange={ event => { this.handleChange('TIME', event)}}></input></h5>
+                    <h5>Number of teams:<input size='4' name='time' value={ this.props.numberTeams } onChange={ event => { this.handleChange('TEAMS', event)}}></input></h5>
 
-                    <button onClick={ () => {
+                    <button className="waves-effect waves-light btn" onClick={ () => {
                         const minutesSeconds = /(minutes|minute|min|seconds|second|sec)/
                         
-                        console.log(minutesSeconds.test(this.props.timePerRound))
-                        console.log('timer per round is' + this.props.timePerRound)
                         if(minutesSeconds.test(this.props.timePerRound.toLowerCase())){
 
                             const parsed = this.parseTime(this.props.timePerRound);

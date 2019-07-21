@@ -6,12 +6,12 @@ export const TEAM_TOTALS = 'TEAM_TOTALS';
 export const NUMBER_TEAMS = 'NUMBER_TEAMS';
 export const GAME_KEYWORD = 'GAME_KEYWORD';
 export const IS_CAPTAIN = 'IS_CAPTAIN';
+export const HAS_CAPTAIN = 'HAS_CAPTAIN';
 export const IS_WAITING = 'IS_WAITING';
 export const CONFIRM_SETTINGS = 'CONFIRM_SETTINGS';
 export const RESTRICTED_NAME = 'RESTRICTED_NAME';
 export const ROUND_INFO = 'ROUND_INFO';
 export const ANSWER = 'ANSWER';
-
 
 export function setNumberRounds(numberRounds){
     if(numberRounds !== undefined){
@@ -84,6 +84,17 @@ export function setIsCaptain(isCaptain){
     }
 }
 
+export function setHasCaptain(hasCaptain = false) {
+    if (hasCaptain !== undefined) {
+        return {
+            type: HAS_CAPTAIN,
+            payload: {
+                hasCaptain: hasCaptain
+            }
+        }
+    }
+}
+
 export function setIsWaiting(isWaiting) {
     if(isWaiting !== undefined){
         return {
@@ -116,7 +127,7 @@ export function setTakenName(takenColor, takenName) {
     }
 }
 
-export function setRound(keyword, roundNumber, roundActive) {
+export function setRound(keyword, roundNumber, roundActive = false) {
     return {
         type: ROUND_INFO,
         payload: {

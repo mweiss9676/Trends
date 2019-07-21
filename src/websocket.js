@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { store } from './index';
-import { setIsCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword, setLengthRounds } from './Actions/game-actions';
+import { setIsCaptain, setHasCaptain, setIsWaiting, setTakenName, setRound, setGameKeyword, setLengthRounds } from './Actions/game-actions';
 import { setTeamId, setTeamColor, setTeamName, setTeamAnswer, setTeamRoundScore, setTeamTotalScore } from './Actions/team-actions';
 import { setOtherTeamInfo } from './Actions/team-actions';
 
@@ -23,6 +23,10 @@ socket.on('disconnect', function (reason){
 
 socket.on('isCaptain', bool => {
     store.dispatch(setIsCaptain(bool))
+})
+
+socket.on('hasCaptain', bool => {
+    store.dispatch(setHasCaptain(bool))
 })
 
 socket.on('waiting', bool => {

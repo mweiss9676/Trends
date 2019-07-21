@@ -1,17 +1,19 @@
 var fetch = require('node-fetch');
 var express = require('express');
-var socket = require('socket.io');
+var http = require('http');
+
 const R = require('rambda');
 const googleTrends = require('google-trends-api');
 
-// var app = express();
-// var server = app.listen(3000);
-
-// const io = socket(server);
 var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-server.listen(5000);
+var server = http.createServer(app);
+// var http = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+
+server.listen(5000, function() {
+  console.log('listening on port 5000')
+});
+
 
 const gameState = {
   timePerRound: null,
@@ -43,16 +45,9 @@ const state = {
 const colors = ['blue', 'orange', 'pink', 'green', 'brown', 'black', 'teal', 'yellow', 'purple', 'red']
 
 io.on('connection', function(socket){
-
   const team = new Team();
   team.clientId = guid();
   socket.emit('id', team.clientId)
-  console.log(`I just sent an id of ${team.clientId} and the socket.id is ${socket.id}`)
-
-  socket.on('whatever', reason => {
-    // console.log(`reconnecting on the server side with incoming clientId = ${clientId} and server side team.clientId = ${team.clientId}`)
-    console.log(`reconnect reason is ${reason}`)
-  })
 
   socket.on('disconnect', function(word) {
     console.log(`${team.clientId} has disconnected and the reason is ${word}`);
@@ -64,9 +59,11 @@ io.on('connection', function(socket){
       console.log(`captain is clientId: ${state.captain}`);
 
       socket.broadcast.emit('waiting', true);
-      socket.broadcast.emit('isCaptain', false)
+      socket.broadcast.emit('isCaptain', false);
+      
+      socket.emit('hasCaptain', true);
       socket.emit('isCaptain', true);
-    }
+    } 
   }) 
 
 

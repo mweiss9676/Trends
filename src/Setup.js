@@ -23,12 +23,13 @@ class Setup extends React.Component {
     
 
     render() {
-        if (this.props.isCaptain === ''){
+        if (!this.props.hasCaptain){
             return(
                 <div className="setupFirst">
                     <div className="setupInterior">
                         <h1 className="question">I'm the captain now...</h1>
                         <button 
+                            className="waves-effect waves-light btn"
                             onClick={ this.hideSetup }>Setup</button>
                     </div>
                 </div>

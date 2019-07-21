@@ -87,7 +87,7 @@ class Form extends React.Component {
             case 'numberOfRounds':
                 if (event.target.value < 1 || event.target.value > 30) {
                     this.setState({
-                        warningText: 'The recommended number of rounds is at least 2 and at most 30',
+                        warningText: 'The recommended number of rounds is at least 2 and at most 10',
                         warningVisible: true
                     })
                 } else {
@@ -114,22 +114,23 @@ class Form extends React.Component {
             return (
                 <form onSubmit={ this.updatePage }>
                     <div className="setup">
-
                         <div className="setupInterior">
-                        {this.state.warningVisible && 
+                            <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
+                            <div className="input-field">
+                                <input className="setupInput"
+                                    type={ this.state.questions[this.state.page].type }
+                                    name={ this.state.questions[this.state.page].name }
+                                    placeholder={ this.state.questions[this.state.page].placeholder }
+                                    value={ this.state.searchFieldText }
+                                    onChange={ this.handleChange }>
+                                </input>
+                            </div>
+                            {this.state.warningVisible && 
                             <div className="warningBox">
-                                <h3 className="warningText">{ this.state.warningText }</h3>
+                                <h5 className="warningText">{ this.state.warningText }</h5>
                             </div>
                         }
 
-                            <h1 className="question">{ this.state.questions[this.state.page].message }</h1>
-                            <input className="setupInput"
-                                type={ this.state.questions[this.state.page].type }
-                                name={ this.state.questions[this.state.page].name }
-                                placeholder={ this.state.questions[this.state.page].placeholder }
-                                value={ this.state.searchFieldText }
-                                onChange={ this.handleChange }>
-                            </input>
                         </div>
                     </div>
                 </form>

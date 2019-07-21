@@ -3,7 +3,7 @@ import Searchbar from './Searchbar.js'
 import { connect } from 'react-redux';
 
 import Clock from './Clock';
-import './App.css';
+import './styles/App.css';
 
 class TopPart extends React.Component {
     constructor(props){

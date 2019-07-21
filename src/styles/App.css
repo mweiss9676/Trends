@@ -205,20 +205,24 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .warningBox {
-  width: 300px;
+  width: 85%;
   height: 100px;
   background-color: white;
-  border: solid 2px black;
+  border: solid 1px #aaa;
   position: absolute;
   bottom: 20px;
   z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .warningBox2 {
-  width: 300px;
+  width: 85%;
   height: 100px;
   background-color: white;
-  border: solid 2px black;
+  border: solid 1px #aaa;
   position: absolute;
   top: 70%;
   left: 50%;
@@ -227,8 +231,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .warningText {
-  padding: 5%;
   text-align: center;
+  color: #aaa;
 }
 
 .question {

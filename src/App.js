@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css';
 import Clubhouse from './Clubhouse.js';
 import TopPart from './TopPart';
 import { connect } from 'react-redux';
